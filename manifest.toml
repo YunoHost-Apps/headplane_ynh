@@ -51,8 +51,6 @@ ram.runtime = "50M"
     [resources.system_user]
 
     [resources.install_dir]
-
-    [resources.install_dir]
     owner="headplane:rwx"
     group="headscale:rx"
 
