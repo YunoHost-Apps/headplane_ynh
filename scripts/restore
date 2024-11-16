@@ -19,7 +19,7 @@ systemctl enable $app.service --quiet
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
-yunohost service add $app --description="Collaborative editor"
+yunohost service add $app --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
