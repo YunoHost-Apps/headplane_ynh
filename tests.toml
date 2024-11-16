@@ -3,6 +3,44 @@ test_format = 1.0
 
 [default]
 
+    # ------------
+    # Tests to run
+    # ------------
+
+    # -------------------------------------------------------------------------------
+    # EVERYTHING PAST THIS POINT IS OPTIONAL AND MOST LIKELY UNNECESSARY FOR NEW APPS
+    #--------------------------------------------------------------------------------
+    ## Conventions in this sample:
+    ## <- An actual comment
+    # <- uncommenting this should be a valid entry in 'tests.toml'
+
+    ## NB: the tests to run are automatically deduced by the CI script according to the
+    ## content of the app's manifest. The declarations below allow to customize which
+    ## tests are ran, possibly add special test suite to test special args, or
+    ## declare which commits to test upgrade from.
+    ##
+    ## You can also decide (though this is discouraged!) to ban/ignore some tests,
+    ## The test IDs to be used in only/exclude statements are:
+    ## * install.root
+    ## * install.subdir
+    ## * install.nourl
+    ## * install.multi
+    ## * backup_restore
+    ## * upgrade
+    ## * upgrade.someCommitId
+    ## * change_url
+    ## NB: you should NOT need this except if you really have a good reason...
+
+    # exclude = ["install.private", "install.multi"]
+
+    ## For special usecases, sometimes you need to setup other things on the machine
+    ## prior to installing the app (such as installing another app)
+    ## (Remove this key entirely if not needed)
+    
+    preinstall = """
+        sudo yunohost app install headscale
+    """
+
     # -------------------------------
     # Default args to use for install
     # -------------------------------
