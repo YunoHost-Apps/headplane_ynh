@@ -52,7 +52,7 @@ ram.runtime = "50M"
 
     [resources.install_dir]
     owner="headplane:rwx"
-    group="headscale:rx"
+    #group="headscale:rx"
 
     [resources.permissions]
     main.url = "/"

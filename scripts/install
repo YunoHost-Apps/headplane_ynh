@@ -54,7 +54,7 @@ ynh_script_progression --message="Adding a configuration file..."
 
 ynh_config_add --template="env" --destination="$install_dir/.env"
 
-usermod -aG headscale $app
+#usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 
 #=================================================
