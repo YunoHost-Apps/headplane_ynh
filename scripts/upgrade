@@ -29,6 +29,17 @@ ynh_config_add_systemd
 yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
 
 #=================================================
+# INSTALL Headplane
+#=================================================
+ynh_script_progression --message="Building $app... (this will take some time and resources!)"
+
+pushd $install_dir
+    ynh_hide_warnings corepack enable && corepack prepare pnpm@latest --activate
+    ynh_hide_warnings pnpm install
+    ynh_hide_warnings pnpm build
+popd
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
