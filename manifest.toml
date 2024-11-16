@@ -20,8 +20,8 @@ yunohost = ">= 11.2.30"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
-ldap = "not_relevant"
-sso = "not_relevant"
+ldap = false
+sso = false
 disk = "50M"
 ram.build = "90M"
 ram.runtime = "50M"
@@ -37,7 +37,7 @@ ram.runtime = "50M"
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
     type = "string"
-    example = "https://headscale.example.com"
+    example = "https://headscale.domain.tld"
 
     [install.init_main_permission]
     type = "group"

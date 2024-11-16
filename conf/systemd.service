@@ -4,14 +4,14 @@ After=network.target
 
 [Service]
 User=__APP__
+Environment=NODE_ENV=production
+Environment=LOAD_ENV_FILE=true
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/headplane/server.js # Adjust the entry point if needed
 Restart=always
-Environment=NODE_ENV=production
-Environment=LOAD_ENV_FILE=true
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=headplane
+SyslogIdentifier=__APP__
 
 ### Depending on specificities of your service/app, you may need to tweak these
 ### .. but this should be a good baseline

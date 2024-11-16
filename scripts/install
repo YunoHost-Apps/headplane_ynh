@@ -6,7 +6,7 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-randomstr=$(ynh_string_random --length=16)
+key=$(ynh_string_random --length=16)
 
 #checking for hedscale user
 check_headscale_user
