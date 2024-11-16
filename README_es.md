@@ -18,7 +18,12 @@ No se debe editar a mano.
 
 
 
-**Versión actual:** 0.1~ynh2
+**Versión actual:** 0.3.5~ynh1
+
+## Capturas
+
+![Captura de Headplane](./doc/screenshots/screenshot.png)
+
 ## Documentaciones y recursos
 
 - Documentación administrador oficial: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

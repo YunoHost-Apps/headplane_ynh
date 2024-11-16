@@ -18,7 +18,12 @@
 
 
 
-**Поставляемая версия:** 0.1~ynh2
+**Поставляемая версия:** 0.3.5~ynh1
+
+## Снимки экрана
+
+![Снимок экрана Headplane](./doc/screenshots/screenshot.png)
+
 ## Документация и ресурсы
 
 - Официальная документация администратора: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>
