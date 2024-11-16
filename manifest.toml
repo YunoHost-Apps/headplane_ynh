@@ -11,7 +11,6 @@ maintainers = ["mdtita"]
 
 [upstream]
 license = "MIT"
-code = "https://github.com/tale/headplane"
 admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md"
 code = "https://github.com/tale/headplane"
 
