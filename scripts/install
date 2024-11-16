@@ -50,7 +50,7 @@ popd
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..."
+ynh_script_progression "Adding a configuration file..."
 
 ynh_config_add --template="env" --destination="$install_dir/.env"
 
