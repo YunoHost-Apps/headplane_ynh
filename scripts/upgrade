@@ -1,0 +1,23 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+echo "Hello world!" > $install_dir/index.html
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression "Configuring nginx web server..."
+
+ynh_config_add_nginx
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Upgrade of $app completed"
