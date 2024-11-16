@@ -10,16 +10,23 @@ ynh_script_progression "Restoring the app main directory..."
 ynh_restore "$install_dir"
 
 #=================================================
-# RESTORE THE NGINX CONFIGURATION
+# RESTORE SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Restoring the NGINX configuration..."
+ynh_script_progression "Restoring system configurations related to $app..."
+
+ynh_restore "/etc/systemd/system/$app.service"
+systemctl enable $app.service --quiet
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
+yunohost service add $app --description="Collaborative editor"
+
 #=================================================
-# RELOAD NGINX
+# START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression "Reloading NGINX web server..."
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
 
 ynh_systemctl --service=nginx --action=reload
 

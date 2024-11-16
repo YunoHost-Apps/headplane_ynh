@@ -5,7 +5,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.1~ynh2"
+version = "0.3.5~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -13,6 +13,7 @@ maintainers = ["mdtita"]
 license = "MIT"
 code = "https://github.com/tale/headplane"
 admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md"
+code = "https://github.com/tale/headplane"
 
 [integration]
 yunohost = ">= 11.2.30"
@@ -43,9 +44,14 @@ ram.runtime = "50M"
     default = "visitors"
 
 [resources]
-#    [resources.sources.main]
-#    url = "https://github.com/tale/headplane"
+
+    [resources.sources.main]
+    url = "https://github.com/tale/headplane/archive/refs/tags/0.3.5.tar.gz"
+    sha256 = "949190f74ced34f1b15be522a5acff810dfd279890b31a9ce7134a3d27faf9cc"
+
     [resources.system_user]
+
+    [resources.install_dir]
 
     [resources.install_dir]
     owner="headplane:rwx"
