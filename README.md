@@ -16,7 +16,7 @@ It shall NOT be edited by hand.
 
 ## Overview
 
-An advanced UI for headscale
+Advanced UI for Headscale
 
 **Shipped version:** 0.1~ynh2
 ## Documentation and resources

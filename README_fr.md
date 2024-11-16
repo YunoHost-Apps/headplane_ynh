@@ -16,7 +16,7 @@ Il NE doit PAS être modifié à la main.
 
 ## Vue d’ensemble
 
-
+Interface utilisateur avancée pour Headscale
 
 **Version incluse :** 0.1~ynh2
 ## Documentations et ressources
