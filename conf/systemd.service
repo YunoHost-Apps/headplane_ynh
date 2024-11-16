@@ -9,9 +9,6 @@ Environment=LOAD_ENV_FILE=true
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/headplane/server.js # Adjust the entry point if needed
 Restart=always
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=__APP__
 
 ### Depending on specificities of your service/app, you may need to tweak these
 ### .. but this should be a good baseline
