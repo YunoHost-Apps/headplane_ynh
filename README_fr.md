@@ -18,7 +18,12 @@ Il NE doit PAS être modifié à la main.
 
 Interface utilisateur avancée pour Headscale
 
-**Version incluse :** 0.1~ynh2
+**Version incluse :** 0.3.5~ynh1
+
+## Captures d’écran
+
+![Capture d’écran de Headplane](./doc/screenshots/screenshot.png)
+
 ## Documentations et ressources
 
 - Documentation officielle de l’admin : <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

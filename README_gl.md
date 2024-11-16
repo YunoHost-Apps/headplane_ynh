@@ -18,7 +18,12 @@ NON debe editarse manualmente.
 
 
 
-**Versión proporcionada:** 0.1~ynh2
+**Versión proporcionada:** 0.3.5~ynh1
+
+## Capturas de pantalla
+
+![Captura de pantalla de Headplane](./doc/screenshots/screenshot.png)
+
 ## Documentación e recursos
 
 - Documentación oficial para admin: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>
