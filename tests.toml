@@ -6,9 +6,10 @@ test_format = 1.0
     # ------------
     # Tests to run
     # ------------
-    
+
     preinstall = """
-        sudo yunohost app install headscale
+    sudo yunohost tools update apps
+    sudo yunohost app install https://github.com/YunoHost-Apps/headscale_ynh/ -a "domain=$domain&init_main_permission=all…
     """
 
     # -------------------------------
