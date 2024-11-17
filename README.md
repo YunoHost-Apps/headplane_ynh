@@ -16,9 +16,14 @@ It shall NOT be edited by hand.
 
 ## Overview
 
-An advanced UI for headscale
+Advanced UI for Headscale
 
-**Shipped version:** 0.1~ynh2
+**Shipped version:** 0.3.5~ynh1
+
+## Screenshots
+
+![Screenshot of Headplane](./doc/screenshots/screenshot.png)
+
 ## Documentation and resources
 
 - Official admin documentation: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

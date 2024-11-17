@@ -18,7 +18,12 @@ Hij mag NIET handmatig aangepast worden.
 
 
 
-**Geleverde versie:** 0.1~ynh2
+**Geleverde versie:** 0.3.5~ynh1
+
+## Schermafdrukken
+
+![Schermafdrukken van Headplane](./doc/screenshots/screenshot.png)
+
 ## Documentatie en bronnen
 
 - Officiele beheerdersdocumentatie: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

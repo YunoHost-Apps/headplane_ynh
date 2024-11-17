@@ -2,60 +2,63 @@ packaging_format = 2
 
 id = "headplane"
 name = "Headplane"
-description.en = "An advanced UI for headscale"
-#description.fr = "Une app simple et bidon pour illustrer comme le packaging d'app de YunoHost fonctionne"
-version = "0.1~ynh2"
+description.en = "Advanced UI for Headscale"
+description.fr = "Interface utilisateur avancée pour Headscale"
+
+version = "0.3.5~ynh1"
+
 maintainers = ["mdtita"]
 
 [upstream]
 license = "MIT"
-code = "https://github.com/tale/headplane"
 admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md"
+code = "https://github.com/tale/headplane"
 
 [integration]
 yunohost = ">= 11.2.30"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
-ldap = "not_relevant"
-sso = "not_relevant"
+ldap = false
+sso = false
 disk = "50M"
 ram.build = "90M"
 ram.runtime = "50M"
 
 [install]
     [install.domain]
-    # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "domain"
 
     [install.path]
-    # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "path"
     default = "/admin"
 
-    [install.headscale_url]
-    ask.en = "Enter headscale install URL"
+    [install.headplane_port]
+    ask.en = "Choose a port to run headplane on"
     type = "string"
-    example = "https://headscale.example.com"
+    default = "3000"
 
-    [install.proxy_path]
-    ask.en = "Redirect destination path (unix:/file for socket)"
-    ask.fr = "Emplacement de destination (unix:/fichier pour socket)"
+    [install.headscale_url]
+    ask.en = "Enter Headscale install URL"
     type = "string"
-    example = "http://127.0.0.1:3000"
-    default = "http://127.0.0.1:3000"
+    example = "https://headscale.domain.tld"
 
     [install.init_main_permission]
     type = "group"
     default = "visitors"
 
 [resources]
-#    [resources.sources.main]
-#    url = "https://github.com/tale/headplane"
+
+    [resources.sources.main]
+    url = "https://github.com/tale/headplane/archive/refs/tags/0.3.5.tar.gz"
+    sha256 = "949190f74ced34f1b15be522a5acff810dfd279890b31a9ce7134a3d27faf9cc"
+
     [resources.system_user]
+
     [resources.install_dir]
-    owner="headplane:rwx"
-    group="headscale:rx"
+    #group="headscale:rx"
+
     [resources.permissions]
     main.url = "/"
 
+    [resources.ports]

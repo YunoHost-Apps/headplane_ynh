@@ -18,7 +18,12 @@ Ini TIDAK boleh diedit dengan tangan.
 
 
 
-**Versi terkirim:** 0.1~ynh2
+**Versi terkirim:** 0.3.5~ynh1
+
+## Tangkapan Layar
+
+![Tangkapan Layar pada Headplane](./doc/screenshots/screenshot.png)
+
 ## Dokumentasi dan sumber daya
 
 - Dokumentasi admin resmi: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

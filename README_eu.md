@@ -18,7 +18,12 @@ EZ editatu eskuz.
 
 
 
-**Paketatutako bertsioa:** 0.1~ynh2
+**Paketatutako bertsioa:** 0.3.5~ynh1
+
+## Pantaila-argazkiak
+
+![Headplane(r)en pantaila-argazkia](./doc/screenshots/screenshot.png)
+
 ## Dokumentazioa eta baliabideak
 
 - Administratzaileen dokumentazio ofiziala: <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>

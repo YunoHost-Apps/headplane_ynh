@@ -18,7 +18,12 @@
 
 
 
-**分发版本：** 0.1~ynh2
+**分发版本：** 0.3.5~ynh1
+
+## 截图
+
+![Headplane 的截图](./doc/screenshots/screenshot.png)
+
 ## 文档与资源
 
 - 官方管理文档： <https://github.com/tale/headplane/blob/main/docs/Advanced-Integration.md>
