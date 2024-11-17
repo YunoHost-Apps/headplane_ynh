@@ -1,20 +1,50 @@
 #!/bin/bash
 
+source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression "Setting up source files..."
+ynh_script_progression "Upgrading source files..."
 
-echo "Hello world!" > $install_dir/index.html
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
 
 #=================================================
-# NGINX CONFIGURATION
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Configuring nginx web server..."
+ynh_script_progression "Upgrading system configurations related to $app..."
 
 ynh_config_add_nginx
+
+ynh_config_add_systemd
+
+yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
+
+#=================================================
+# INSTALL Headplane
+#=================================================
+ynh_script_progression --message="Building $app... (this will take some time and resources!)"
+
+pushd $install_dir
+    ynh_hide_warnings corepack enable && corepack prepare pnpm@latest --activate
+    ynh_hide_warnings pnpm install
+    ynh_hide_warnings pnpm build
+popd
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
 
 #=================================================
 # END OF SCRIPT

@@ -2,20 +2,15 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
+
+key=$(ynh_string_random --length=16)
+api_key=$(ynh_string_random --length=16)
+
 #checking for hedscale user
-check_headscale_user
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-ynh_script_progression "Setting up source files..."
-
-# Download, check integrity, uncompress and patch the source from app.src
-git config --system --add safe.directory $install_dir
-git clone https://github.com/tale/headplane.git "$install_dir" --quiet
-
-#chmod -R o-rwx "$install_dir"
-#chown -R headplane:www-data "$install_dir"
+#check_headscale_user
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -25,56 +20,50 @@ ynh_script_progression "Installing dependencies..."
 ynh_nodejs_install
 
 #=================================================
-# INSTALL Headplane
+# DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Building $app... (this will take some time and resources!)"
+ynh_script_progression "Setting up source files..."
 
-#ynh_exec_as_app npm install pnpm
-pushd "$install_dir"
-	npm install -g pnpm
-    pnpm install
-	pnpm build
-popd
-
-randomstr=$(ynh_string_random --length=16)
-
-ynh_config_add --template="env" --destination="$install_dir/.env"
-
-usermod -aG headscale headplane
-chown -R headplane:headplane "$install_dir"
+ynh_setup_source --dest_dir="$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
+# SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression "Configuring NGINX web server..."
+ynh_script_progression "Adding system configurations related to $app..."
 
 ynh_config_add_nginx
 
 ynh_config_add_systemd
 
+yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
+
+#=================================================
+# INSTALL Headplane
+#=================================================
+ynh_script_progression "Building $app... (this will take some time and resources!)"
+
+pushd $install_dir
+    ynh_hide_warnings corepack enable && corepack prepare pnpm@latest --activate
+    ynh_hide_warnings pnpm install
+    ynh_hide_warnings pnpm build
+popd
+
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-#ynh_script_progression --message="Adding a configuration file..."
+ynh_script_progression "Adding a configuration file..."
 
-#ynh_add_config --template="../conf/config.js" --destination="$install_dir/config/config.js"
+ynh_config_add --template="env" --destination="$install_dir/.env"
 
-#chmod 600 "$install_dir/config/config.js"
-#chown $app "$install_dir/config/config.js"
+#usermod -aG headscale $app
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting a systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action="start" --log_path="systemd"
-
-#=================================================
-# APPLY FOLDER RIGHTS
-#=================================================
-
-#chgrp -R www-data $install_dir
 
 #=================================================
 # END OF SCRIPT

@@ -1,17 +1,15 @@
 [Unit]
-Description=Headplane - Headscale Management Web UI
+Description=Headplane: Headscale Management Web UI
 After=network.target
 
 [Service]
-WorkingDirectory=__INSTALL_DIR__/
-ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/headplane/server.js # Adjust the entry point if needed
-Restart=always
-User=headplane
+User=__APP__
 Environment=NODE_ENV=production
 Environment=LOAD_ENV_FILE=true
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=headplane
+EnvironmentFile="__INSTALL_DIR__/.env"
+WorkingDirectory=__INSTALL_DIR__/
+ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/headplane/server.js
+Restart=always
 
 ### Depending on specificities of your service/app, you may need to tweak these
 ### .. but this should be a good baseline

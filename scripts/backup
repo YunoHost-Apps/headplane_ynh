@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 ynh_print_info "Declaring files to be backed up..."
@@ -11,10 +12,12 @@ ynh_print_info "Declaring files to be backed up..."
 ynh_backup "$install_dir"
 
 #=================================================
-# BACKUP THE NGINX CONFIGURATION
+# SYSTEM CONFIGURATION
 #=================================================
 
 ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+ynh_backup "/etc/systemd/system/$app.service"
 
 #=================================================
 # END OF SCRIPT
