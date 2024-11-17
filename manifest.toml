@@ -33,6 +33,11 @@ ram.runtime = "50M"
     type = "path"
     default = "/admin"
 
+    [install.headplane_port]
+    ask.en = "Choose a port to run headplane on"
+    type = "string"
+    default = "3000"
+
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
     type = "string"
