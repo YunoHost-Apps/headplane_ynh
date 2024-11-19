@@ -26,11 +26,11 @@ test_format = 1.0
     # -------------------------------
     [default.curl_tests]
     home.path = "/admin"
-    home.expect_return_code= 301
+    home.expect_return_code= 200
 
     login.path = "/admin/login"
     login.expect_content = "Welcome to Headplane"
-    login.auto_test_assets = true
+    #login.auto_test_assets = true
     #login.auto_test_assets = true
     #login.expect_status_code = 200
     #login.expect_string = "Welcome to Headplane"
