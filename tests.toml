@@ -3,17 +3,17 @@ test_format = 1.0
 
 [default]
     # Exclude specific tests that are not relevant for your app
-    exclude = ["install.private", "install.multi", "install.subdir", "upgrade", "change_url"]
+    exclude = ["install.private", "install.multi", "install.subdir", "change_url"]
 
     # ------------
     # Tests to run
     # ------------
 
-    preinstall = """
+    #preinstall = """
     #sudo yunohost tools update apps
     #sudo apt-get update
     #sudo apt-get install python3-pycurl python3-bs4 -y > /dev/null
-    """
+    #"""
 
     # -------------------------------
     # Default args to use for install
@@ -31,6 +31,3 @@ test_format = 1.0
     login.path = "/admin/login"
     login.expect_content = "Welcome to Headplane"
     #login.auto_test_assets = true
-    #login.auto_test_assets = true
-    #login.expect_status_code = 200
-    #login.expect_string = "Welcome to Headplane"
