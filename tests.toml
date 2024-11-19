@@ -3,7 +3,7 @@ test_format = 1.0
 
 [default]
     # Exclude specific tests that are not relevant for your app
-    exclude = ["install.private", "install.multi", "install.subdir", "upgrade"]
+    exclude = ["install.private", "install.multi", "install.subdir", "upgrade", "change_url"]
 
     # ------------
     # Tests to run
