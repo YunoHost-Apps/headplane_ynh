@@ -9,6 +9,10 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
+ynh_nodejs_install
+
+#usermod -aG headscale $app
+chown -R $app:$app "$install_dir"
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
