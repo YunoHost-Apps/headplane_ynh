@@ -2,6 +2,8 @@
 test_format = 1.0
 
 [default]
+    # Exclude specific tests that are not relevant for your app
+    exclude = ["install.private", "install.multi"]
 
     # ------------
     # Tests to run
@@ -9,8 +11,8 @@ test_format = 1.0
 
     preinstall = """
     #sudo yunohost tools update apps
-    #sudo apt update
-    #sudo apt install python3-pycurl python3-bs4 -y
+    #sudo apt-get update
+    #sudo apt-get install python3-pycurl python3-bs4 -y > /dev/null
     """
 
     # -------------------------------
@@ -18,17 +20,14 @@ test_format = 1.0
     # -------------------------------
 
     args.headscale_url = "https://headscale.domain.tld"
+
       # -------------------------------
     # Curl tests to validate that the app works
     # -------------------------------
     [default.curl_tests]
-    #base_url = "__DOMAIN__/admin"
-    #path = "/admin"
-    home.path = "/admin"
-    #admin.path = "/admin/login"
-    admin.logged_on_sso = true
-    #auto_test_assets = true
-    #asset.path = "/core/img/logo/logo.svg"
-    #file.path = "/remote.php/dav/files/__USER__/Readme.md"
-    #file.logged_on_sso = true
-    #file.expect_content = "# Welcome to Nextcloud!"
+    # Base URL for the app (root domain)
+    #base_url = "https://headplane.domain.tld"
+    default.expect_return_code= 302
+    login.path = "/admin/login"
+    login.expect_status_code = 200
+    login.expect_string = "Welcome to Headplane"
