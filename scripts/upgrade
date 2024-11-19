@@ -25,7 +25,8 @@ ynh_script_progression "Upgrading system configurations related to $app..."
 ynh_config_add_nginx
 
 ynh_config_add_systemd
-
+#install nodejs
+ynh_nodejs_install
 yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
 
 #=================================================

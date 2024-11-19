@@ -9,6 +9,7 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
+ynh_nodejs_install
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
