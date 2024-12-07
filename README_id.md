@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Headplane untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/headplane.svg)](https://ci-apps.yunohost.org/ci/apps/headplane/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/headplane.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/headplane.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/headplane)](https://ci-apps.yunohost.org/ci/apps/headplane/)
+![Status kerja](https://apps.yunohost.org/badge/state/headplane)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/headplane)
 
 [![Pasang Headplane dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=headplane)
 

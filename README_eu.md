@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Headplane YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/headplane.svg)](https://ci-apps.yunohost.org/ci/apps/headplane/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/headplane.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/headplane.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/headplane)](https://ci-apps.yunohost.org/ci/apps/headplane/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/headplane)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/headplane)
 
 [![Instalatu Headplane YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=headplane)
 

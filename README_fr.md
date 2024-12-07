@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # Headplane pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/headplane.svg)](https://ci-apps.yunohost.org/ci/apps/headplane/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/headplane.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/headplane.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/headplane)](https://ci-apps.yunohost.org/ci/apps/headplane/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/headplane)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/headplane)
 
 [![Installer Headplane avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=headplane)
 
