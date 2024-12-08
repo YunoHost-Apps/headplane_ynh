@@ -5,7 +5,9 @@
 
 # Headplane для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/headplane.svg)](https://ci-apps.yunohost.org/ci/apps/headplane/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/headplane.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/headplane.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/headplane)](https://ci-apps.yunohost.org/ci/apps/headplane/)
+![Состояние работы](https://apps.yunohost.org/badge/state/headplane)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/headplane)
 
 [![Установите Headplane с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=headplane)
 

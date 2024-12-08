@@ -6,7 +6,7 @@ After=network.target
 User=__APP__
 Environment=NODE_ENV=production
 Environment=LOAD_ENV_FILE=true
-EnvironmentFile="__INSTALL_DIR__/.env"
+EnvironmentFile=__INSTALL_DIR__/.env
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/headplane/server.js
 Restart=always
