@@ -45,9 +45,9 @@ ynh_script_progression "Building $app... (this will take some time and resources
 pushd $install_dir
    # ynh_hide_warnings npm install -g corepack@latest
     #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
-    git config --global --add safe.directory /var/www/headplane
     git init .
-    chown -R $app:$app "$install_dir"
+    git config --add safe.directory /var/www/headplane
+    #chown -R $app:$app "$install_dir"
     git add .
     git commit -m "init"
     ynh_hide_warnings npm install pnpm@10
