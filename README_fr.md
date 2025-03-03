@@ -20,7 +20,7 @@ Il NE doit PAS être modifié à la main.
 
 Interface utilisateur avancée pour Headscale
 
-**Version incluse :** 0.3.5~ynh1
+**Version incluse :** 0.5.3~ynh2
 
 ## Captures d’écran
 

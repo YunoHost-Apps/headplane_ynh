@@ -20,7 +20,7 @@ It shall NOT be edited by hand.
 
 Advanced UI for Headscale
 
-**Shipped version:** 0.3.5~ynh1
+**Shipped version:** 0.5.3~ynh2
 
 ## Screenshots
 
