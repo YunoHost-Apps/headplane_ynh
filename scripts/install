@@ -46,6 +46,7 @@ pushd $install_dir
    # ynh_hide_warnings npm install -g corepack@latest
     #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
     git init .
+    chown -R $app:$app "$install_dir"
     git add .
     git commit -m "init"
     ynh_hide_warnings npm install pnpm@10
