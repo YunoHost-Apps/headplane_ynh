@@ -6,7 +6,7 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-key=$(ynh_string_random --length=16)
+key=$(ynh_string_random --length=32)
 api_key=$(ynh_string_random --length=16)
 
 #checking for hedscale user
@@ -43,9 +43,12 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 ynh_script_progression "Building $app... (this will take some time and resources!)"
 
 pushd $install_dir
-    ynh_hide_warnings npm install -g corepack@latest
-    ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
-    #ynh_hide_warnings npm install pnpm@10
+   # ynh_hide_warnings npm install -g corepack@latest
+    #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
+    git init .
+    git add .
+    git commit -m "init"
+    ynh_hide_warnings npm install pnpm@10
     ynh_hide_warnings pnpm install
     ynh_hide_warnings pnpm build
 popd
