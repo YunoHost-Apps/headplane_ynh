@@ -20,7 +20,7 @@ No se debe editar a mano.
 
 
 
-**Versión actual:** 0.3.5~ynh2
+**Versión actual:** 0.5.3~ynh2
 
 ## Capturas
 

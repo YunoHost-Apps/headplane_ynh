@@ -20,7 +20,7 @@ Nie powinno być ono edytowane ręcznie.
 
 
 
-**Dostarczona wersja:** 0.3.5~ynh2
+**Dostarczona wersja:** 0.5.3~ynh2
 
 ## Zrzuty ekranu
 

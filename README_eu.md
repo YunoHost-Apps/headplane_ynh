@@ -20,7 +20,7 @@ EZ editatu eskuz.
 
 
 
-**Paketatutako bertsioa:** 0.3.5~ynh2
+**Paketatutako bertsioa:** 0.5.3~ynh2
 
 ## Pantaila-argazkiak
 
