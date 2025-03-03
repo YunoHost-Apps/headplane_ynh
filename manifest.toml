@@ -51,7 +51,7 @@ ram.runtime = "50M"
 
     [resources.sources.main]
     url = "https://github.com/tale/headplane/archive/refs/tags/0.5.3.zip"
-    sha256 = "2eb59d504531df490f0241d3ce15591c31b9deab8bef45e2f269a25abd15b946"
+    sha256 = "156ec1d5df2e3cb24ab989fc61a599cc2258560e4e85ddb327a0dc9f7a29b75c"
 
     [resources.system_user]
 
