@@ -35,7 +35,12 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 ynh_script_progression --message="Building $app... (this will take some time and resources!)"
 
 pushd $install_dir
-    ynh_hide_warnings corepack enable && corepack prepare pnpm@latest --activate
+   # ynh_hide_warnings npm install -g corepack@latest
+    #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
+    git init .
+    git add .
+    git commit -m "init"
+    ynh_hide_warnings npm install pnpm@10
     ynh_hide_warnings pnpm install
     ynh_hide_warnings pnpm build
 popd
