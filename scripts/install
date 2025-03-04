@@ -52,8 +52,8 @@ pushd $install_dir
     #hchown -R $app:$app "$install_dir"
     ynh_exec_as_app git add .
     ynh_exec_as_app git commit -m "init"
-    ynh_hide_warnings npm install pnpm@10
-    ynh_hide_warnings pnpm install
+    ynh_hide_warnings  npm install pnpm@10
+    ynh_hide_warnings  pnpm install
     ynh_hide_warnings pnpm build
 popd
 
