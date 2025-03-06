@@ -51,7 +51,7 @@ pushd $install_dir
     #ynh_exec_as_app git config --add safe.directory /var/www/headplane
     ynh_exec_as_app git add .
     ynh_exec_as_app git commit -m "init"
-    ynh_exec_as_app git config --add safe.directory /var/www/headplane
+    ynh_exec_as_app git config --global --add safe.directory /var/www/headplane
 
     # Install pnpm globally using npm
     ynh_hide_warnings npm install -g pnpm@10 -f
