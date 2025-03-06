@@ -53,7 +53,7 @@ pushd $install_dir
     ynh_exec_as_app git commit -m "init"
 
     # Install pnpm globally using npm
-    ynh_hide_warnings npm install -g pnpm@10
+    ynh_hide_warnings npm install -g pnpm@10 -f
 
     # Ensure we're using the global pnpm
     export PATH="$(npm root -g):$PATH"
