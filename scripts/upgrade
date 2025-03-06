@@ -35,12 +35,24 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 ynh_script_progression --message="Building $app... (this will take some time and resources!)"
 
 pushd $install_dir
+ export HOME="/var/www/$app"
    # ynh_hide_warnings npm install -g corepack@latest
     #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
-    git init .
-    git add .
-    git commit -m "init"
-    ynh_hide_warnings npm install pnpm@10
+    ynh_exec_as_app git config --global user.name "headplane"
+    ynh_exec_as_app git config --global user.email "you@example.com"
+    ynh_exec_as_app git init
+    ynh_hide_warnings git config --global --add safe.directory /var/www/headplane
+    ynh_exec_as_app git add .
+    ynh_exec_as_app git commit -m "init"
+
+
+    # Install pnpm globally using npm
+    ynh_hide_warnings npm install -g pnpm@10 -f
+
+    # Ensure we're using the global pnpm
+    export PATH="$(npm root -g):$PATH"
+
+    # Now run pnpm commands
     ynh_hide_warnings pnpm install
     ynh_hide_warnings pnpm build
 popd
