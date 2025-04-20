@@ -58,7 +58,7 @@ pushd $install_dir
 popd
 
 
-#usermod -aG headscale $app
+usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 #=================================================
 # START SYSTEMD SERVICE

@@ -9,8 +9,7 @@ source /usr/share/yunohost/helpers
 key=$(ynh_string_random --length=32)
 api_key=$(ynh_string_random --length=16)
 
-#checking for hedscale user
-#check_headscale_user
+abort_if_headscale_not_installed
 
 #=================================================
 # INSTALL DEPENDENCIES
