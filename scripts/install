@@ -63,7 +63,7 @@ pushd $install_dir
     export PATH="$(npm root -g):$PATH"
 
     # Patch app to display more fitting post install instructions
-    ynh_replace --match="headscale apikeys create" --replace="yunohost app shell headscale <<< './headscale apikeys create'" --file="$install_dir/app/routes/auth/login.tsx"
+    ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login.tsx"
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
