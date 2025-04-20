@@ -14,14 +14,14 @@ source /usr/share/yunohost/helpers
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..."
+ynh_script_progression "Stopping a systemd service..."
 
 ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..."
+ynh_script_progression "Updating NGINX web server configuration..."
 ynh_config_change_url_nginx
 
 #=================================================
@@ -30,7 +30,7 @@ ynh_config_change_url_nginx
 ynh_script_progression "Upgrading system configurations related to $app..."
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
-ynh_script_progression --message="Rebuilding $app... (this will take some time and resources!)"
+ynh_script_progression "Rebuilding $app... (this will take some time and resources!)"
 ynh_nodejs_install
 pushd $install_dir
  export HOME="/var/www/$app"
@@ -65,7 +65,7 @@ chown -R $app:$app "$install_dir"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting a systemd service..."
 
 ynh_systemctl --service="$app" --action="start"
 
@@ -73,4 +73,4 @@ ynh_systemctl --service="$app" --action="start"
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app"
+ynh_script_progression "Change of URL completed for $app"

@@ -7,9 +7,7 @@ source /usr/share/yunohost/helpers
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
-
-ynh_app_setting_set_default --key=key --value=$(ynh_string_random --length=32)
-key=$(ynh_app_setting_get --key=key)
+ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
 # For the time being, path is forced to "/admin"
 ynh_app_setting_set_default --key=path --value="/admin"
@@ -50,7 +48,7 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 #=================================================
 # INSTALL Headplane
 #=================================================
-ynh_script_progression --message="Building $app... (this will take some time and resources!)"
+ynh_script_progression "Building $app... (this will take some time and resources!)"
 
 pushd $install_dir
  export HOME="/var/www/$app"
