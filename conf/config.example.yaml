@@ -1,7 +1,7 @@
 # Configuration for the Headplane server and web application
 server:
   host: "127.0.0.1"
-  port: "__HEADPLANE_PORT__"
+  port: "__PORT__"
 
   # The secret used to encode and decode web sessions
   # Ensure that this is exactly 32 characters long
