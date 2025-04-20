@@ -74,7 +74,8 @@ pushd $install_dir
     ynh_hide_warnings pnpm install
 
     # Build with the specified path ${path%/} removes a trailing slash, if there's any
-    ynh_hide_warnings __INTERNAL_PREFIX=${path%/} pnpm build
+    export __INTERNAL_PREFIX=${path%/}
+    ynh_hide_warnings pnpm build
 popd
 
 
