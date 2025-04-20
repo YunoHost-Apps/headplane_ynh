@@ -29,7 +29,7 @@ ram.runtime = "50M"
     [install.domain]
     type = "domain"
     help.en = "Choose a dedicated domain for the app. It will then be accessible on the `/admin` path on that domain."
-    help.en = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
+    help.fr = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
 
 #    [install.path]
 #    type = "path"
