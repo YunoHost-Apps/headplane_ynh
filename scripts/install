@@ -11,6 +11,10 @@ api_key=$(ynh_string_random --length=16)
 
 abort_if_headscale_not_installed
 
+if $path="/"; then
+    ynh_die "The application cannot be installed at the root of a domain. Do not enter '/' as a path."
+fi
+
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
@@ -61,7 +65,8 @@ pushd $install_dir
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
-    ynh_hide_warnings pnpm build
+    # Build with the specified path ${path%/} removes a trailing slash, if there's any
+    ynh_hide_warnings env __INTERNAL_PREFIX=${path%/} pnpm build
 popd
 
 #=================================================

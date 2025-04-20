@@ -32,6 +32,8 @@ ram.runtime = "50M"
     [install.path]
     type = "path"
     default = "/admin"
+    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
+    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"

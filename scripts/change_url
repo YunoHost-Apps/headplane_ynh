@@ -17,11 +17,48 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Stopping a systemd service..."
 
 ynh_systemctl --service="$app" --action="stop"
+
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
 ynh_script_progression --message="Updating NGINX web server configuration..."
 ynh_config_change_url_nginx
+
+#=================================================
+# SPECIFIC MODIFICATIONS
+#=================================================
+ynh_script_progression "Upgrading system configurations related to $app..."
+ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
+
+ynh_script_progression --message="Rebuilding $app... (this will take some time and resources!)"
+ynh_nodejs_install
+pushd $install_dir
+ export HOME="/var/www/$app"
+   # ynh_hide_warnings npm install -g corepack@latest
+    #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
+    ynh_exec_as_app git config --global user.name "headplane"
+    ynh_exec_as_app git config --global user.email "you@example.com"
+    ynh_exec_as_app git init
+    ynh_hide_warnings git config --global --add safe.directory /var/www/headplane
+    ynh_exec_as_app git add .
+    ynh_exec_as_app git commit -m "init"
+
+
+    # Install pnpm globally using npm
+    ynh_hide_warnings npm install -g pnpm@10 -f
+
+    # Ensure we're using the global pnpm
+    export PATH="$(npm root -g):$PATH"
+
+    # Now run pnpm commands
+    ynh_hide_warnings pnpm install
+    # Build with the specified path ${path%/} removes a trailing slash, if there's any
+    ynh_hide_warnings env __INTERNAL_PREFIX=${path%/} pnpm build
+popd
+
+
+usermod -aG headscale $app
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # GENERIC FINALISATION
