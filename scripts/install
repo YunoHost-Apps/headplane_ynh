@@ -77,7 +77,7 @@ ynh_script_progression "Adding a configuration file..."
 
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
-#usermod -aG headscale $app
+[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 
 #=================================================

@@ -14,7 +14,7 @@ ynh_restore "$install_dir"
 
 ynh_nodejs_install
 
-usermod -aG headscale $app
+[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 
 #=================================================

@@ -79,8 +79,7 @@ pushd $install_dir
     ynh_hide_warnings pnpm build
 popd
 
-
-usermod -aG headscale $app
+[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 #=================================================
 # START SYSTEMD SERVICE
