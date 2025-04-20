@@ -11,9 +11,8 @@ api_key=$(ynh_string_random --length=16)
 
 abort_if_headscale_not_installed
 
-if $path="/"; then
-    ynh_die "The application cannot be installed at the root of a domain. Do not enter '/' as a path."
-fi
+# For the time being, path is forced to "/admin"
+ynh_app_setting_set_default --key=path --value="/admin"
 
 #=================================================
 # INSTALL DEPENDENCIES

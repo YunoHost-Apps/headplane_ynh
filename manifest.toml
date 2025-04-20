@@ -28,12 +28,14 @@ ram.runtime = "50M"
 [install]
     [install.domain]
     type = "domain"
+    help.en = "Choose a dedicated domain for the app. It will then be accessible on the `/admin` path on that domain."
+    help.en = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
 
-    [install.path]
-    type = "path"
-    default = "/admin"
-    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
-    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
+#    [install.path]
+#    type = "path"
+#    default = "/admin"
+#    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
+#    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
