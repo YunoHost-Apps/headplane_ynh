@@ -56,6 +56,7 @@ pushd $install_dir
     #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
     ynh_exec_as_app git config --global user.name "headplane"
     ynh_exec_as_app git config --global user.email "you@example.com"
+    ynh_exec_as_app git config --global init.defaultBranch master
     ynh_exec_as_app git init
     ynh_hide_warnings git config --global --add safe.directory /var/www/headplane
     ynh_exec_as_app git add .
