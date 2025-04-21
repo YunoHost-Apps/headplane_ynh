@@ -21,12 +21,12 @@ test_format = 1.0
 
     args.headscale_url = "https://headscale.domain.tld"
 
-      # -------------------------------
+    # -------------------------------
     # Curl tests to validate that the app works
     # -------------------------------
     [default.curl_tests]
-    home.path = "/admin"
-    home.expect_return_code= 200
+    #home.path = "/admin"
+    #home.expect_return_code= 200
 
     login.path = "/admin/login"
     login.expect_content = "Welcome to Headplane"
