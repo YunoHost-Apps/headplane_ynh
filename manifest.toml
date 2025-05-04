@@ -5,7 +5,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.5.10~ynh1"
+version = "0.5.10~ynh2"
 
 maintainers = ["mdtita"]
 
@@ -36,6 +36,14 @@ ram.runtime = "50M"
 #    default = "/admin"
 #    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
 #    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
+
+    [install.dex]
+    type = "app"
+    filter = "match(id, '^(dex)(__[0-9+])?$')"
+    ask.en = "Select the Dex app that will handle authentication for Headplane."
+    ask.fr = "Sélectionnez l'app Dex qui gérera l'authentification pour Headplane."
+    help.en = "You need to have at least one instance of Dex installed beforehand on your server."
+    help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
