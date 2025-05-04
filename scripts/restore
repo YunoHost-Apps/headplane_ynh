@@ -1,6 +1,9 @@
 #!/bin/bash
 
+source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
+
+abort_if_headscale_not_installed
 
 #=================================================
 # RESTORE THE APP MAIN DIR
@@ -11,8 +14,9 @@ ynh_restore "$install_dir"
 
 ynh_nodejs_install
 
-#usermod -aG headscale $app
+[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
+
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
@@ -30,7 +34,7 @@ yunohost service add $app --description="Advanced UI for Headscale" --log="/var/
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start"
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Running on 127.0.0.1" --timeout=30
 
 ynh_systemctl --service=nginx --action=reload
 

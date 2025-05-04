@@ -4,6 +4,15 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression "Ensuring downward compatibility..."
+ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
+
+# For the time being, path is forced to "/admin"
+ynh_app_setting_set_default --key=path --value="/admin"
+
+#=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
@@ -16,12 +25,19 @@ ynh_systemctl --service="$app" --action="stop"
 ynh_script_progression "Upgrading source files..."
 
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config.yaml"
+
 #install nodejs
 ynh_nodejs_install
+
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
+
+if ynh_app_upgrading_from_version_before_or_equal_to 0.5.10~ynh1
+then
+    ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
+fi
 
 ynh_config_add_nginx
 
@@ -32,7 +48,7 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 #=================================================
 # INSTALL Headplane
 #=================================================
-ynh_script_progression --message="Building $app... (this will take some time and resources!)"
+ynh_script_progression "Building $app... (this will take some time and resources!)"
 
 pushd $install_dir
  export HOME="/var/www/$app"
@@ -40,6 +56,7 @@ pushd $install_dir
     #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
     ynh_exec_as_app git config --global user.name "headplane"
     ynh_exec_as_app git config --global user.email "you@example.com"
+    ynh_exec_as_app git config --global init.defaultBranch master
     ynh_exec_as_app git init
     ynh_hide_warnings git config --global --add safe.directory /var/www/headplane
     ynh_exec_as_app git add .
@@ -52,20 +69,25 @@ pushd $install_dir
     # Ensure we're using the global pnpm
     export PATH="$(npm root -g):$PATH"
 
+    # Patch app to display more fitting post install instructions
+    ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login.tsx"
+
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
+
+    # Build with the specified path ${path%/} removes a trailing slash, if there's any
+    export __INTERNAL_PREFIX=${path%/}
     ynh_hide_warnings pnpm build
 popd
 
-
-#usermod -aG headscale $app
+[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start"
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Running on 127.0.0.1" --timeout=30
 
 #=================================================
 # END OF SCRIPT
