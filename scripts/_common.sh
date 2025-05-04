@@ -10,10 +10,8 @@ nodejs_version="22"
 # PERSONAL HELPERS
 #=================================================
 
-check_headscale_user() {
-    ynh_system_user_exists --username=headscale
-    if [ $? -eq 1 ]; then
-        ynh_die "Headscale app is not installed Aborting."
+abort_if_headscale_not_installed() {
+    if [ ! ynh_in_ci_tests ] && [ ! yunohost --output-as plain app list | grep -q "^headscale$" ]; then
+        ynh_die "Headscale app is not installed. Aborting."
     fi
-    # Continue the script if user exists
 }

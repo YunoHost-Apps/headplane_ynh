@@ -5,7 +5,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.5.3~ynh2"
+version = "0.5.10~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -28,15 +28,14 @@ ram.runtime = "50M"
 [install]
     [install.domain]
     type = "domain"
+    help.en = "Choose a dedicated domain for the app. It will then be accessible on the `/admin` path on that domain."
+    help.fr = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
 
-    [install.path]
-    type = "path"
-    default = "/admin"
-
-    [install.headplane_port]
-    ask.en = "Choose a port to run headplane on"
-    type = "string"
-    default = "3000"
+#    [install.path]
+#    type = "path"
+#    default = "/admin"
+#    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
+#    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
@@ -50,8 +49,8 @@ ram.runtime = "50M"
 [resources]
 
     [resources.sources.main]
-    url = "https://github.com/tale/headplane/archive/refs/tags/0.5.3.zip"
-    sha256 = "156ec1d5df2e3cb24ab989fc61a599cc2258560e4e85ddb327a0dc9f7a29b75c"
+    url = "https://github.com/tale/headplane/archive/refs/tags/0.5.10.tar.gz"
+    sha256 = "e41ade00f1de582628740fd7ac96af6c79ad3af57185deeb87fa65e9e59a9369"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
