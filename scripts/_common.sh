@@ -33,16 +33,16 @@ setup_dex() {
 	fi
 
 	# Make sure that the Dex version is compatible
-	dex_version=$(yunohost app info dex --output-as json | jq -r '.version')
+	dex_version=$(yunohost app info $dex --output-as json | jq -r '.version')
 	if [ $(dpkg --compare-versions "${dex_version#v}" lt "2.42.1~ynh4") ]; then
-		ynh_die "You need to upgrade Dex to v2.42.1~ynh4 and above first."
+		ynh_die "You need to upgrade $dex to v2.42.1~ynh4 and above first."
 	fi
 
 	# Prepare the variables
 	dex_install_dir="$(ynh_app_setting_get --app $dex --key install_dir)"
 	dex_domain="$(ynh_app_setting_get --app $dex --key domain)"
 	dex_path="$(ynh_app_setting_get --app $dex --key path)"
-	oidc_callback="https://$domain${path%}/oidc/callback"
+	oidc_callback="https://$domain${path%/}/oidc/callback"
 
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
