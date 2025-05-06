@@ -65,7 +65,7 @@ setup_dex() {
 	ynh_app_setting_set         --key=api_key               --value="$api_key"
 	ynh_app_setting_set         --key=api_key_expires       --value="$api_key_expires"
 	ynh_app_setting_set         --key=api_key_expires_date  --value="$api_key_expires_date"
-	ynh_app_setting_set         --key=oidc_name             --value="$app"
+	ynh_app_setting_set_default --key=oidc_name             --value="$app"
 	ynh_app_setting_set         --key=oidc_callback         --value="$oidc_callback"
 	ynh_app_setting_set_default --key=oidc_secret           --value="$(ynh_string_random --length=32 --filter='A-F0-9')"
 
