@@ -86,6 +86,7 @@ popd
 
 [ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================

@@ -25,7 +25,7 @@ headscale:
   # If you use the TLS configuration in Headscale, and you are not using
   # Let's Encrypt for your certificate, pass in the path to the certificate.
   # (This has no effect `url` does not start with `https://`)
-  # tls_cert_path: "__INSTALL_DIR__/tls.crt"
+  # tls_cert_path: ""
 
   # Optional, public URL if they differ
   # This affects certain parts of the web UI

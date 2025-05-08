@@ -20,7 +20,8 @@ test_format = 1.0
     # -------------------------------
 
     args.dex = "dex"
-    args.headscale_url = "https://headscale.domain.tld"
+    # http to prevent it from attempting to check the self-signed certificate
+    args.headscale_url = "http://headscale.domain.tld"
 
     # -------------------------------
     # Curl tests to validate that the app works

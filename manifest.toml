@@ -47,8 +47,12 @@ ram.runtime = "50M"
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
+    ask.fr = "Entrez l'URL de Headscale"
     type = "string"
     example = "https://headscale.domain.tld"
+    pattern = "^https://.*$"
+    help.en = "It needs to starts with 'https://'"
+    help.fr = "Elle doit commencer par 'https://'"
 
     [install.init_main_permission]
     type = "group"
