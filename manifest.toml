@@ -46,9 +46,8 @@ ram.runtime = "50M"
     ask.fr = "Entrez l'URL de Headscale"
     type = "string"
     example = "https://headscale.domain.tld"
-    pattern = "^https://.*$"
-    help.en = "It needs to starts with 'https://'"
-    help.fr = "Elle doit commencer par 'https://'"
+    pattern.regexp = "^https?://.*$"
+    pattern.error = "URL needs to starts with 'https://' (or 'http://' for debugging purposes)"
 
     [install.init_main_permission]
     type = "group"
