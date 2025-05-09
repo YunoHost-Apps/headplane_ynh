@@ -15,12 +15,14 @@ admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integratio
 code = "https://github.com/tale/headplane"
 
 [integration]
-yunohost = ">= 11.2.30"
+yunohost = ">= 12.0.9"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
+
 ldap = false
 sso = false
+
 disk = "50M"
 ram.build = "90M"
 ram.runtime = "50M"
