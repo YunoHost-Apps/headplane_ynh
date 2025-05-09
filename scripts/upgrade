@@ -11,7 +11,8 @@ ynh_script_progression "Ensuring downward compatibility..."
 ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
 # For the time being, path is forced to "/admin"
-ynh_app_setting_set_default --key=path --value="/admin"
+path="/admin"
+ynh_app_setting_set --key=path --value="/admin"
 
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -19,6 +20,12 @@ ynh_app_setting_set_default --key=path --value="/admin"
 ynh_script_progression "Stopping $app's systemd service..."
 
 ynh_systemctl --service="$app" --action="stop"
+
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+setup_dex
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -35,10 +42,10 @@ ynh_nodejs_install
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-if ynh_app_upgrading_from_version_before_or_equal_to 0.5.10~ynh1
-then
-    ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
-fi
+# Disable OIDC since CI cannot use certificates
+[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
+
+ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
 ynh_config_add_nginx
 
