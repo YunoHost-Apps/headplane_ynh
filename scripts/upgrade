@@ -42,7 +42,7 @@ ynh_nodejs_install
 ynh_script_progression "Upgrading system configurations related to $app..."
 
 # Disable OIDC since CI cannot use certificates
-[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="config.example.yaml"
+[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
 
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
