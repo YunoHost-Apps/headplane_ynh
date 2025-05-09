@@ -7,6 +7,7 @@ source /usr/share/yunohost/helpers
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
+
 ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
 # For the time being, path is forced to "/admin"
@@ -82,6 +83,7 @@ popd
 
 [ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
