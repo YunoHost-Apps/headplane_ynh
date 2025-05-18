@@ -19,6 +19,7 @@ abort_if_headscale_not_installed() {
 setup_dex() {
 	# List the Dex apps installed on the system
 	dex_apps="$(yunohost app list -f --output-as json | jq -r '[ .apps[] | select(.manifest.id == "dex") ]')"
+	dex="${dex:-dex}"
 
 	# If there are no Dex app installed
 	if [ $(jq -r '[ .[] | select(.manifest.id == "dex").id ] | length' <<< $dex_apps) -eq 0 ]
