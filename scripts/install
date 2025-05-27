@@ -1,4 +1,5 @@
 #!/bin/bash
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -9,9 +10,12 @@ source /usr/share/yunohost/helpers
 abort_if_headscale_not_installed
 
 # For the time being, path is forced to "/admin"
-ynh_app_setting_set_default --key=path --value="/admin"
+path="/admin"
+ynh_app_setting_set --key=path --value="/admin"
 
 ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
+
+setup_dex
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -63,7 +67,7 @@ pushd $install_dir
     export PATH="$(npm root -g):$PATH"
 
     # Patch app to display more fitting post install instructions
-    ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login.tsx"
+    ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login/page.tsx"
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
@@ -75,6 +79,9 @@ popd
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression "Adding a configuration file..."
+
+# Disable OIDC since CI cannot use certificates
+[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
 
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 

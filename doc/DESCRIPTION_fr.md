@@ -1,0 +1,1 @@
+Headscale est la version auto-hébergée de Tailscale, un service VPN populaire basé sur Wireguard. Par défaut, il n'est pas livré avec une interface web, et c'est là qu'intervient Headplane. Headplane est une interface web complète pour Headscale, vous permettant de gérer vos nœuds, réseaux et ACLs avec facilité.

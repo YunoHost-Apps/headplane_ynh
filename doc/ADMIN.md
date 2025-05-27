@@ -1,0 +1,1 @@
+The OIDC authentication key will expire after __API_EXPIRES_DATE__. A simple app (forced-)upgrade will renew it.

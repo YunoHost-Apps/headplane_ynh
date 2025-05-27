@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "headplane"
@@ -5,7 +7,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.5.10~ynh1"
+version = "0.6.0~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -15,12 +17,14 @@ admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integratio
 code = "https://github.com/tale/headplane"
 
 [integration]
-yunohost = ">= 11.2.30"
+yunohost = ">= 12.0.9"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
+
 ldap = false
 sso = false
+
 disk = "50M"
 ram.build = "90M"
 ram.runtime = "50M"
@@ -31,16 +35,21 @@ ram.runtime = "50M"
     help.en = "Choose a dedicated domain for the app. It will then be accessible on the `/admin` path on that domain."
     help.fr = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
 
-#    [install.path]
-#    type = "path"
-#    default = "/admin"
-#    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
-#    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
+    [install.dex]
+    type = "app"
+    filter = "match(id, '^(dex)(__[0-9+])?$')"
+    ask.en = "Select the Dex app that will handle authentication for Headplane."
+    ask.fr = "Sélectionnez l'app Dex qui gérera l'authentification pour Headplane."
+    help.en = "You need to have at least one instance of Dex installed beforehand on your server."
+    help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
+    ask.fr = "Entrez l'URL de Headscale"
     type = "string"
     example = "https://headscale.domain.tld"
+    pattern.regexp = "^https?://.*$"
+    pattern.error = "URL needs to starts with 'https://' (or 'http://' for debugging purposes)"
 
     [install.init_main_permission]
     type = "group"
@@ -49,14 +58,13 @@ ram.runtime = "50M"
 [resources]
 
     [resources.sources.main]
-    url = "https://github.com/tale/headplane/archive/refs/tags/0.5.10.tar.gz"
-    sha256 = "e41ade00f1de582628740fd7ac96af6c79ad3af57185deeb87fa65e9e59a9369"
+    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.0.tar.gz"
+    sha256 = "5a9a4bea43f6f8b40e77032d942d80fa51b23292b537558f1f35ed1d95939c5f"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
 
     [resources.install_dir]
-    #group="headscale:rx"
 
     [resources.permissions]
     main.url = "/"
