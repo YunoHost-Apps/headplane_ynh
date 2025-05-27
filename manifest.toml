@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "headplane"
@@ -33,16 +35,21 @@ ram.runtime = "50M"
     help.en = "Choose a dedicated domain for the app. It will then be accessible on the `/admin` path on that domain."
     help.fr = "Choisissez un domaine dédié pour l'application. Elle sera ensuite accessible à l'adresse `/admin` de ce domaine."
 
-#    [install.path]
-#    type = "path"
-#    default = "/admin"
-#    help.en = "The app cannot be installed at the root of a domain. Do not choose '/'."
-#    help.fr = "L'application ne peut pas être installée à la racine d'un domaine. Ne choisissez pas '/'."
+    [install.dex]
+    type = "app"
+    filter = "match(id, '^(dex)(__[0-9+])?$')"
+    ask.en = "Select the Dex app that will handle authentication for Headplane."
+    ask.fr = "Sélectionnez l'app Dex qui gérera l'authentification pour Headplane."
+    help.en = "You need to have at least one instance of Dex installed beforehand on your server."
+    help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
 
     [install.headscale_url]
     ask.en = "Enter Headscale install URL"
+    ask.fr = "Entrez l'URL de Headscale"
     type = "string"
     example = "https://headscale.domain.tld"
+    pattern.regexp = "^https?://.*$"
+    pattern.error = "URL needs to starts with 'https://' (or 'http://' for debugging purposes)"
 
     [install.init_main_permission]
     type = "group"
@@ -58,7 +65,6 @@ ram.runtime = "50M"
     [resources.system_user]
 
     [resources.install_dir]
-    #group="headscale:rx"
 
     [resources.permissions]
     main.url = "/"
