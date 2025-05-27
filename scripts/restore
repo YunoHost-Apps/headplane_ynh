@@ -18,6 +18,12 @@ ynh_nodejs_install
 chown -R $app:$app "$install_dir"
 
 #=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+setup_dex
+
+#=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
