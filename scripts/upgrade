@@ -50,15 +50,25 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
 
+# Maintainers: refer to upstream's mise.toml, it contains the build steps for go and node
+
 #=================================================
-# INSTALL Headplane
+# INSTALL HEADPLANE GO MODULES
 #=================================================
 ynh_script_progression "Building $app's Go modules... (this will take some time and resources!)"
 
+pushd $install_dir
+    # Copy Go's wasm_exec.js to the public directory
+    echo // $(go version) > app/wasm_exec.js
+    cat $(go env GOROOT)/lib/wasm/wasm_exec.js >> app/wasm_exec.js
+
     # Build go modules
     ynh_hide_warnings env GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
-    ynh_hide_warnings go build -o build/hp_agent ./cmd/hp_agent
+    ynh_hide_warnings go build -o $install_dir/build/hp_agent ./cmd/hp_agentpopd
 
+#=================================================
+# INSTALL HEADPLANE NODEJS MODULES
+#=================================================
 ynh_script_progression "Building $app's NodeJS modules... (this will take some time and resources!)"
 
 pushd $install_dir
