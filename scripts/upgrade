@@ -80,6 +80,10 @@ pushd $install_dir
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
 
+    # Build go modules
+    ynh_hide_warnings env GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
+    ynh_hide_warnings go build -o build/hp_agent ./cmd/hp_agent
+
     # Build with the specified path ${path%/} removes a trailing slash, if there's any
     export __INTERNAL_PREFIX=${path%/}
     ynh_hide_warnings pnpm build

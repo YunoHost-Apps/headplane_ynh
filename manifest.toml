@@ -73,3 +73,6 @@ ram.runtime = "50M"
 
     [resources.nodejs]
     version = "22"
+
+    [resources.go]
+    version = "1.25.1"

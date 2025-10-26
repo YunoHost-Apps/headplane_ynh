@@ -57,13 +57,18 @@ pushd $install_dir
     #ynh_hide_warnings npm install -g pnpm@10.4 -f
 
     # Ensure we're using the global pnpm
-    export PATH="$(npm root -g):$PATH"
+    #export PATH="$(npm root -g):$PATH"
 
     # Patch app to display more fitting post install instructions
     ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login/page.tsx"
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
+
+    # Build go modules
+    ynh_hide_warnings env GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
+    ynh_hide_warnings go build -o build/hp_agent ./cmd/hp_agent
+
     # Build with the specified path ${path%/} removes a trailing slash, if there's any
     ynh_hide_warnings env __INTERNAL_PREFIX=${path%/} pnpm build
 popd
