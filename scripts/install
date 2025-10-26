@@ -18,13 +18,6 @@ ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --le
 setup_dex
 
 #=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression "Installing dependencies..."
-
-#REMOVEME? ynh_nodejs_install
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
