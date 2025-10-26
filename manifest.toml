@@ -66,6 +66,9 @@ ram.runtime = "50M"
 
     [resources.install_dir]
 
+    [resources.data_dir]
+    subdirs = ["agent"]
+
     [resources.permissions]
     main.url = "/"
 
