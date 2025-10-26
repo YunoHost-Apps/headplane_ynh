@@ -18,7 +18,7 @@ server:
   #
   # Data formats prior to 0.6.1 will automatically be migrated.
   # PLEASE ensure this directory is mounted if running in Docker.
-  data_path: "__DATA_PATH__"
+  data_path: "__DATA_DIR__"
 
 # Headscale specific settings to allow Headplane to talk
 # to Headscale and access deep integration features
