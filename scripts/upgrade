@@ -40,7 +40,7 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config.yaml"
 ynh_script_progression "Upgrading system configurations related to $app..."
 
 # Disable OIDC since CI cannot use certificates
-[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
+ynh_in_ci_tests && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
 
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
@@ -107,7 +107,7 @@ pushd $install_dir
     ynh_hide_warnings pnpm build
 popd
 
-[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
+! ynh_in_ci_tests && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 
 #=================================================
