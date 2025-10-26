@@ -9,9 +9,9 @@
 #=================================================
 
 abort_if_headscale_not_installed() {
-    if [ ! ynh_in_ci_tests ] && [ ! yunohost --output-as plain app list | grep -q "^headscale$" ]; then
-        ynh_die "Headscale app is not installed. Aborting."
-    fi
+	if ! ynh_in_ci_tests && ! yunohost --output-as plain app list | grep -q "^headscale$"; then
+		ynh_die "Headscale app is not installed. Aborting."
+	fi
 }
 
 setup_dex() {
@@ -22,7 +22,7 @@ setup_dex() {
 	# If there are no Dex app installed
 	if [ $(jq -r '[ .[] | select(.manifest.id == "dex").id ] | length' <<< $dex_apps) -eq 0 ]
 	then
-	    ynh_die "The apps needs at least one Dex instance to be installed. Install or restore one first."
+		ynh_die "The apps needs at least one Dex instance to be installed. Install or restore one first."
 	# Else if the configured Dex app is not in the list, default to the first one and display a warning
 	elif [ $(jq --arg dex $dex -r '[ .[] | select(.id == $dex) ] | length' <<< $dex_apps) -ne 1 ]
 	then
@@ -45,7 +45,7 @@ setup_dex() {
 
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
-		if [ ! ynh_in_ci_tests ]; then
+		if ! ynh_in_ci_tests; then
 			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
 			api_key="$(yunohost app shell headscale <<< './headscale apikeys create --expiration 999d')"
 		else
