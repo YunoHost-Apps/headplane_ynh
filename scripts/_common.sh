@@ -57,13 +57,35 @@ setup_dex() {
 		api_key_expires_date="$(date -d @$api_key_expires -I)"
 	fi
 
+	# If the API key needs updating (exclude Headscale requirement in CI context)
+	if [[ -z "$#preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
+		if ! ynh_in_ci_tests; then
+			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
+			headplane_id="$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')"
+			if [ -n $headplane_id ];
+				yunohost app shell headscale <<< 'headscale users create headplane'
+				headplane_id=$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')
+			fi
+
+			preauth_key="$(yunohost app shell headscale <<< 'headscale preauthkeys create --expiration 999d --user '$headplane_id' --output json' | jq '.key')"
+		else
+			preauth_key=""
+		fi
+		# 86227200 is 998 days
+		preauth_key_expires="$(( $(date +%s) + 86227200 ))"
+		# ISO format for better internationalization
+		preauth_key_expires_date="$(date -d @$api_key_expires -I)"
+	fi
+
 	# Store the variables
 	ynh_app_setting_set         --key=dex_install_dir       --value="$dex_install_dir"
 	ynh_app_setting_set         --key=dex_domain            --value="$dex_domain"
 	ynh_app_setting_set         --key=dex_path              --value="$dex_path"
 	ynh_app_setting_set         --key=api_key               --value="$api_key"
 	ynh_app_setting_set         --key=api_key_expires       --value="$api_key_expires"
-	ynh_app_setting_set         --key=api_key_expires_date  --value="$api_key_expires_date"
+	ynh_app_setting_set         --key=api_key_expires_date  --value="$api_key_expires_date"	ynh_app_setting_set         --key=preauth_key               --value="$preauth_key"
+	ynh_app_setting_set         --key=preauth_key_expires       --value="$preauth_key_expires"
+	ynh_app_setting_set         --key=preauth_key_expires_date  --value="$preauth_key_expires_date"
 	ynh_app_setting_set_default --key=oidc_name             --value="$app"
 	ynh_app_setting_set         --key=oidc_callback         --value="$oidc_callback"
 	ynh_app_setting_set_default --key=oidc_secret           --value="$(ynh_string_random --length=32 --filter='A-F0-9')"
