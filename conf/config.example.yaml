@@ -165,6 +165,10 @@ oidc:
   # for your Headplane instance with /admin/oidc/callback
   redirect_uri: "__OIDC_CALLBACK__"
 
+  # Stores the users and their permissions for Headplane
+  # This is a path to a JSON file, default is specified below.
+  user_storage_file: "__INSTALL_DIR__/users.json"
+
   # By default profile pictures are pulled from the OIDC provider when
   # we go to fetch the userinfo endpoint. Optionally, this can be set to
   # "oidc" or "gravatar" as of 0.6.1.
