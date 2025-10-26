@@ -12,8 +12,6 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-#REMOVEME? ynh_nodejs_install
-
 [ ! ynh_in_ci_tests ] && usermod -aG headscale $app
 chown -R $app:$app "$install_dir"
 
