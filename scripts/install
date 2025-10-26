@@ -42,8 +42,8 @@ ynh_script_progression "Building $app... (this will take some time and resources
 
 pushd $install_dir
     export HOME="/var/www/$app"
-   # ynh_hide_warnings npm install -g corepack@latest
-    #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
+    ynh_hide_warnings npm install -g corepack@latest
+    ynh_hide_warnings corepack enable && corepack prepare pnpm@10.4 --activate
     ynh_exec_as_app git config --global user.name "headplane"
     ynh_exec_as_app git config --global user.email "you@example.com"
     ynh_exec_as_app git config --global init.defaultBranch master
@@ -54,7 +54,7 @@ pushd $install_dir
 
 
     # Install pnpm globally using npm
-    ynh_hide_warnings npm install -g pnpm@10 -f
+    #ynh_hide_warnings npm install -g pnpm@10.4 -f
 
     # Ensure we're using the global pnpm
     export PATH="$(npm root -g):$PATH"
