@@ -38,7 +38,13 @@ yunohost service add "$app" --description="Advanced UI for Headscale" --log="/va
 #=================================================
 # INSTALL Headplane
 #=================================================
-ynh_script_progression "Building $app... (this will take some time and resources!)"
+ynh_script_progression "Building $app's Go modules... (this will take some time and resources!)"
+
+    # Build go modules
+    ynh_hide_warnings env GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
+    ynh_hide_warnings go build -o build/hp_agent ./cmd/hp_agent
+
+ynh_script_progression "Building $app's NodeJS modules... (this will take some time and resources!)"
 
 pushd $install_dir
     export HOME="/var/www/$app"
@@ -64,10 +70,6 @@ pushd $install_dir
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
-
-    # Build go modules
-    ynh_hide_warnings env GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
-    ynh_hide_warnings go build -o build/hp_agent ./cmd/hp_agent
 
     # Build with the specified path ${path%/} removes a trailing slash, if there's any
     ynh_hide_warnings env __INTERNAL_PREFIX=${path%/} pnpm build
