@@ -1,6 +1,7 @@
 [Unit]
 Description=Headplane: Headscale Management Web UI
-After=network.target nginx.service headscale.service __DEX__.service
+After=network.target nginx.service __DEX__.service
+Requires=network.target nginx.service __DEX__.service
 
 [Service]
 User=__APP__
