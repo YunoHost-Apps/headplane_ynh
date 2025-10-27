@@ -58,7 +58,7 @@ setup_dex() {
 	fi
 
 	# If the API key needs updating (exclude Headscale requirement in CI context)
-	if [[ -z "$#preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
+	if [[ -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
 			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
 			headplane_id="$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')"
@@ -84,7 +84,8 @@ setup_dex() {
 	ynh_app_setting_set         --key=dex_path              --value="$dex_path"
 	ynh_app_setting_set         --key=api_key               --value="$api_key"
 	ynh_app_setting_set         --key=api_key_expires       --value="$api_key_expires"
-	ynh_app_setting_set         --key=api_key_expires_date  --value="$api_key_expires_date"	ynh_app_setting_set         --key=preauth_key               --value="$preauth_key"
+	ynh_app_setting_set         --key=api_key_expires_date  --value="$api_key_expires_date"
+	ynh_app_setting_set         --key=preauth_key               --value="$preauth_key"
 	ynh_app_setting_set         --key=preauth_key_expires       --value="$preauth_key_expires"
 	ynh_app_setting_set         --key=preauth_key_expires_date  --value="$preauth_key_expires_date"
 	ynh_app_setting_set_default --key=oidc_name             --value="$app"
