@@ -63,6 +63,7 @@ setup_dex() {
 			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
 			headplane_id="$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')"
 			if [ -n $headplane_id ];
+			then
 				yunohost app shell headscale <<< 'headscale users create headplane'
 				headplane_id=$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')
 			fi
