@@ -28,6 +28,12 @@ ynh_systemctl --service="$app" --action="stop"
 setup_dex
 
 #=================================================
+# SETUP HEADPLANE AGENT
+#=================================================
+
+setup_agent
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."

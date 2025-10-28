@@ -22,6 +22,12 @@ chown -R $app:$app "$install_dir"
 setup_dex
 
 #=================================================
+# SETUP HEADPLANE AGENT
+#=================================================
+
+setup_agent
+
+#=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
