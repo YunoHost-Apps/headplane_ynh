@@ -102,6 +102,13 @@ pushd $install_dir
 popd
 
 #=================================================
+# CLEANUP
+#=================================================
+
+ynh_safe_rm "$install_dir/.cache"
+ynh_safe_rm "$install_dir/.local/share/pnpm"
+
+#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression "Adding a configuration file..."

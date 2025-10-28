@@ -117,6 +117,13 @@ popd
 chown -R $app:$app "$install_dir"
 
 #=================================================
+# CLEANUP
+#=================================================
+
+ynh_safe_rm "$install_dir/.cache"
+ynh_safe_rm "$install_dir/.local/share/pnpm"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
