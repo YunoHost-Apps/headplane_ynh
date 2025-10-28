@@ -87,7 +87,7 @@ setup_agent() {
 			preauth_key="$(yunohost app shell headscale <<< 'headscale preauthkeys create --expiration 999d --user '$headplane_id' --output json' | jq '.key')"
 		else
 			preauth_key=""
-			ynh_write_var_in_file --file="../conf/config.example.yaml" --key="enabled" --value="false" --after="    # it connects."
+			ynh_write_var_in_file --file="../conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
 		fi
 		# 86227200 is 998 days
 		preauth_key_expires="$(( $(date +%s) + 86227200 ))"
