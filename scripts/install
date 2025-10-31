@@ -120,6 +120,7 @@ ynh_config_add --template="config.example.yaml" --destination="$install_dir/conf
 ! ynh_in_ci_tests && usermod -aG headscale $app
 chown -R $headscale:$app "$install_dir"
 chown -R $headscale:$app "$data_dir"
+chmod 440 "$install_dir/config.yaml"
 
 #=================================================
 # START SYSTEMD SERVICE
