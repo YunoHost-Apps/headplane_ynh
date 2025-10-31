@@ -94,7 +94,7 @@ setup_agent() {
 				headplane_id=$(yunohost app shell $headscale <<< './headscale users list -n $app -o json' | jq 'select(.) | .[].id')
 			fi
 
-			preauth_key="$(yunohost app shell headscale <<< 'headscale preauthkeys create --expiration 999d --user '$headplane_id' --output json' | jq '.key')"
+			preauth_key="$(yunohost app shell headscale <<< './headscale preauthkeys create --expiration 999d --user '$headplane_id' --output json' | jq '.key')"
 		else
 			preauth_key="undefined"
 			ynh_write_var_in_file --file="../conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
