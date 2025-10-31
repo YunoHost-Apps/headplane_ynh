@@ -16,7 +16,7 @@ get_headscale_settings() {
 		else
 			ynh_print_info "$headscale has been found on the server."
 		fi
-		ynh_app_setting_set --key=headscale --value=$headscale
+		ynh_app_setting_set --key=headscale --value="$headscale"
 	fi
 		headscale_install_dir="$(yunohost app setting $headscale install_dir)"
 		headscale_url="https://$(yunohost app setting $headscale domain)/"
@@ -56,8 +56,8 @@ setup_dex() {
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
-			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
-			api_key="$(yunohost app shell headscale <<< './headscale apikeys create --expiration 999d')"
+			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
+			api_key="$(yunohost app shell $headscale <<< './headscale apikeys create --expiration 999d')"
 		else
 			api_key=""
 		fi
@@ -86,12 +86,12 @@ setup_agent() {
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
-			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
-			headplane_id="$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')"
+			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
+			headplane_id="$(yunohost app shell $headscale <<< './headscale users list -n $app -o json' | jq 'select(.) | .[].id')"
 			if [ -n $headplane_id ];
 			then
-				yunohost app shell headscale <<< 'headscale users create headplane'
-				headplane_id=$(yunohost app shell headscale <<< 'headscale users list -n headplane -o json' | jq 'select(.) | .[].id')
+				yunohost app shell $headscale <<< './headscale users create $app'
+				headplane_id=$(yunohost app shell $headscale <<< './headscale users list -n $app -o json' | jq 'select(.) | .[].id')
 			fi
 
 			preauth_key="$(yunohost app shell headscale <<< 'headscale preauthkeys create --expiration 999d --user '$headplane_id' --output json' | jq '.key')"
