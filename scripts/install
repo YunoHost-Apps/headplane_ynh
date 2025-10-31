@@ -62,8 +62,8 @@ pushd $install_dir
     # Build go modules
     ynh_hide_warnings ynh_exec_as_app GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
     ynh_hide_warnings ynh_exec_as_app go build -o build/hp_agent ./cmd/hp_agent
-    mv ./build/hp_agent $data_dir/agent/agent
-    chmod 550 $data_dir/agent/agent
+    mv ./build/hp_agent $data_dir/agent
+    chmod 550 $data_dir/agent
 popd
 
 #=================================================
