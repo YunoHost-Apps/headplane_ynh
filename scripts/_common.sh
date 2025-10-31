@@ -9,16 +9,19 @@
 #=================================================
 
 get_headscale_settings() {
-	if [ -z $headscale ]; then
-		ynh_app_setting_set_default --key=headscale --value=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
+	if [ -z $headscale ] || [ ! yunohost --output-as plain app list | grep -q "^$headscale$" ]; then
+		headscale=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
 		if [ -z $headscale ]; then
 			ynh_die "Headscale app is not installed. Aborting."
 		else
 			ynh_print_info "$headscale has been found on the server."
 		fi
+		ynh_app_setting_set --key=headscale --value=$headscale
 	fi
-		ynh_app_setting_set_default --key=headscale_install_dir --value=$(yunohost app setting $headscale install_dir)
-		ynh_app_setting_set_default --key=headscale_url --value="https://$(yunohost app setting $headscale domain)/"
+		headscale_install_dir="$(yunohost app setting $headscale install_dir)"
+		headscale_url="https://$(yunohost app setting $headscale domain)/"
+		ynh_app_setting_set --key=headscale_install_dir --value="$headscale_install_dir"
+		ynh_app_setting_set --key=headscale_url --value="$headscale_url"
 }
 
 setup_dex() {

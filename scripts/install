@@ -118,7 +118,8 @@ ynh_in_ci_tests && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
 ! ynh_in_ci_tests && usermod -aG headscale $app
-chown -R $app:$app "$install_dir"
+chown -R $headscale:$app "$install_dir"
+chown -R $headscale:$app "$data_dir"
 
 #=================================================
 # START SYSTEMD SERVICE

@@ -12,8 +12,9 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-! ynh_in_ci_tests && usermod -aG headscale $app
-chown -R $app:$app "$install_dir"
+! ynh_in_ci_tests && usermod -aG $headscale $app
+chown -R $headscale:$app "$install_dir"
+chown -R $headscale:$app "$data_dir"
 
 #=================================================
 # SETUP DEX FOR OIDC

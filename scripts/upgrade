@@ -114,8 +114,9 @@ pushd $install_dir
     ynh_hide_warnings pnpm build
 popd
 
-! ynh_in_ci_tests && usermod -aG headscale $app
-chown -R $app:$app "$install_dir"
+! ynh_in_ci_tests && usermod -aG $headscale $app
+chown -R $headscale:$app "$install_dir"
+chown -R $headscale:$app "$data_dir"
 
 #=================================================
 # CLEANUP
