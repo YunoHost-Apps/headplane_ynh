@@ -43,13 +43,13 @@ ram.runtime = "50M"
     help.en = "You need to have at least one instance of Dex installed beforehand on your server."
     help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
 
-    [install.headscale_url]
-    ask.en = "Enter Headscale install URL"
-    ask.fr = "Entrez l'URL de Headscale"
-    type = "string"
-    example = "https://headscale.domain.tld"
-    pattern.regexp = "^https?://.*$"
-    pattern.error = "URL needs to starts with 'https://' (or 'http://' for debugging purposes)"
+    [install.headscale]
+    type = "app"
+    filter = "match(id, '^(headscale)(__[0-9+])?$')"
+    ask.en = "Select the Headscale app that will be managed by Headplane."
+    ask.fr = "Sélectionnez l'app Headscale qui sera gérée par Headplane."
+    help.en = "You need to have at least one instance of Headscale installed beforehand on your server."
+    help.fr = "Vous devez avoir au moins une instance de Headscale préalablement installée sur votre serveur."
 
     [install.init_main_permission]
     type = "group"

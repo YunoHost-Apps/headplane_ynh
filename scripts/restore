@@ -3,7 +3,7 @@
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
-abort_if_headscale_not_installed
+get_headscale_settings
 
 #=================================================
 # RESTORE THE APP MAIN DIR

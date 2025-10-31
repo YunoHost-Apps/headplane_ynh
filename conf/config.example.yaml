@@ -43,7 +43,7 @@ headscale:
   # This is optional, but HIGHLY recommended for the best experience
   # If this is read only, Headplane will show your configuration settings
   # in the Web UI, but they cannot be changed.
-  config_path: "__INSTALL_DIR__/config.yaml"
+  config_path: "__HEADSCALE_INSTALL_DIR__/config.yaml"
 
   # Headplane internally validates the Headscale configuration
   # to ensure that it changes the configuration in a safe way.
@@ -58,7 +58,7 @@ headscale:
   # readable and writable to the Headplane process.
   # When using this, Headplane will no longer need to automatically
   # restart Headscale for DNS record changes.
-  # dns_records_path: "__INSTALL_DIR__/extra_records.json"
+  dns_records_path: "__HEADSCALE_INSTALL_DIR__/dnsrecords.json"
 
 # Integration configurations for Headplane to interact with Headscale
 integration:

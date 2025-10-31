@@ -8,10 +8,17 @@
 # PERSONAL HELPERS
 #=================================================
 
-abort_if_headscale_not_installed() {
-	if ! ynh_in_ci_tests && ! yunohost --output-as plain app list | grep -q "^headscale$"; then
-		ynh_die "Headscale app is not installed. Aborting."
+get_headscale_settings() {
+	if [ -z $headscale ]; then
+		ynh_app_setting_set_default --key=headscale --value=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
+		if [ -z $headscale ]; then
+			ynh_die "Headscale app is not installed. Aborting."
+		else
+			ynh_print_info "$headscale has been found on the server."
+		fi
 	fi
+		ynh_app_setting_set_default --key=headscale_install_dir --value=$(yunohost app setting $headscale install_dir)
+		ynh_app_setting_set_default --key=headscale_url --value="https://$(yunohost app setting $headscale domain)/"
 }
 
 setup_dex() {

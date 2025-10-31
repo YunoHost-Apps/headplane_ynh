@@ -1,14 +1,12 @@
 [Unit]
 Description=Headplane: Headscale Management Web UI
-After=network.target nginx.service __DEX__.service
-Requires=network.target nginx.service __DEX__.service
+After=network.target nginx.service __DEX__.service __HEADSCALE__.service
+Requires=network.target nginx.service __DEX__.service __HEADSCALE__.service
 
 [Service]
-User=__APP__
-#Environment=NODE_ENV=production
-#Environment=LOAD_ENV_FILE=true
+User=__HEADSCALE__
+Group=__HEADSCALE__
 Environment=HEADPLANE_CONFIG_PATH=__INSTALL_DIR__/config.yaml
-#EnvironmentFile=__INSTALL_DIR__/.env
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/server/index.js
 Restart=always

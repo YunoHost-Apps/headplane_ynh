@@ -8,11 +8,12 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
 
-ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
+get_headscale_settings
 
 # For the time being, path is forced to "/admin"
-path="/admin"
-ynh_app_setting_set --key=path --value="/admin"
+ynh_app_setting_set_default --key=path --value="/admin"
+
+ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
 #=================================================
 # STOP SYSTEMD SERVICE
