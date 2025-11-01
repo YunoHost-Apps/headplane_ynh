@@ -87,14 +87,14 @@ setup_agent() {
 	if [[ -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
 			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
-			headplane_id="$(yunohost app shell $headscale <<< './headscale users list -n $app -o json' | jq 'select(.) | .[].id')"
+			headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
 			if [ -n $headplane_id ];
 			then
 				yunohost app shell $headscale <<< "./headscale users create $app"
-				headplane_id="$(yunohost app shell $headscale <<< ./headscale users list -n $app -o json | jq 'select(.) | .[].id')"
+				headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
 			fi
 
-			preauth_key="$(yunohost app shell $headscale <<< ./headscale preauthkeys create --expiration 999d --user $headplane_id --output json | jq '.key')"
+			preauth_key=$(yunohost app shell $headscale <<< "./headscale preauthkeys create --expiration 999d --user $headplane_id -o json | jq -r '.key'")
 		else
 			preauth_key="undefined"
 			ynh_write_var_in_file --file="../conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
