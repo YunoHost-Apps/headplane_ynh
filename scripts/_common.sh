@@ -9,7 +9,7 @@
 #=================================================
 
 get_headscale_settings() {
-	if [ -z ${headscale:-} ] || [ ! $(yunohost --output-as plain app list | grep -q "^$headscale$") ]; then
+	if [ -z ${headscale:-} ] || [ ! yunohost --output-as plain app list | grep -q "^$headscale$" ]; then
 		headscale=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
 		if [ -z $headscale ]; then
 			ynh_die "Headscale app is not installed. Aborting."
@@ -18,8 +18,8 @@ get_headscale_settings() {
 		fi
 		ynh_app_setting_set --key=headscale --value="$headscale"
 	fi
-		headscale_install_dir="$(yunohost app setting $headscale install_dir)"
-		headscale_url="https://$(yunohost app setting $headscale domain)/"
+		headscale_install_dir="$(ynh_app_setting_get --app=$headscale --key=install_dir)"
+		headscale_url="https://$(ynh_app_setting_get --app=$headscale --key=domain)/"
 		ynh_app_setting_set --key=headscale_install_dir --value="$headscale_install_dir"
 		ynh_app_setting_set --key=headscale_url --value="$headscale_url"
 }
