@@ -9,7 +9,7 @@
 #=================================================
 
 get_headscale_settings() {
-	if [ -z ${headscale:-} ] || [ ! yunohost --output-as plain app list | grep -q "^$headscale$" ]; then
+	if [ -z ${headscale:-} ] || ! yunohost --output-as plain app list | grep -q "^$headscale$"; then
 		headscale=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
 		if [ -z $headscale ]; then
 			ynh_die "Headscale app is not installed. Aborting."
