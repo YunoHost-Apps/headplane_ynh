@@ -70,7 +70,7 @@ ram.runtime = "50M"
     subdirs = ["agent_data"]
 
     [resources.permissions]
-    main.url = "/"
+    main.url = "/admin"
 
     [resources.ports]
 
