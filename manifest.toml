@@ -53,7 +53,9 @@ ram.runtime = "50M"
 
     [install.init_admin_permission]
     type = "group"
-    default = "visitors"
+    default = "admins"
+    ask.en = "Select which group can access Headplane."
+    ask.fr = "Selectionnez quel groupe peut accéder à Headplane."
     help.en = "You can log in Headplane with your YunoHost credentials. You may leave access to visitors if you want to allow external accounts to log in with an authentication key from Headscale."
     help.fr = "Vous pouvez vous connecter à Headplane avec vos identifiants YunoHost. Vous pouvez laisser l'accès aux visiteurs si vous souhaitez autoriser l'accès à des comptes extérieurs se connectant avec une clé d'authentification de Headscale."
 
@@ -74,7 +76,7 @@ ram.runtime = "50M"
     [resources.permissions]
     main.url = "/"
     main.show_tile = false
-    admin.allowed = "admins"
+    main.allowed = "admins"
     admin.url = "/admin"
 
     [resources.ports]
