@@ -14,7 +14,7 @@ test_format = 1.0
     sudo yunohost domain add dex.domain.tld
     sudo yunohost app install dex -a "domain=dex.domain.tld&path=/&oidc_name=&oidc_secret=&oidc_callback"
     sudo yunohost domain add headscale.domain.tld
-    sudo yunohost app install headscale -a "dex=dex&domain=headscale.domain.tld&base_domain=vpn.internal"
+    sudo yunohost app install https://github.com/YunoHost-Apps/headscale_ynh/tree/master -f -a "dex=dex&domain=headscale.domain.tld&base_domain=vpn.internal"
     """
 
     # -------------------------------
