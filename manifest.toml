@@ -51,9 +51,11 @@ ram.runtime = "50M"
     help.en = "You need to have at least one instance of Headscale installed beforehand on your server."
     help.fr = "Vous devez avoir au moins une instance de Headscale préalablement installée sur votre serveur."
 
-    [install.init_main_permission]
+    [install.init_admin_permission]
     type = "group"
     default = "visitors"
+    help.en = "You can log in Headplane with your YunoHost credentials. You may leave access to visitors if you want to allow external accounts to log in with an authentication key from Headscale."
+    help.fr = "Vous pouvez vous connecter à Headplane avec vos identifiants YunoHost. Vous pouvez laisser l'accès aux visiteurs si vous souhaitez autoriser l'accès à des comptes extérieurs se connectant avec une clé d'authentification de Headscale."
 
 [resources]
 
@@ -70,7 +72,10 @@ ram.runtime = "50M"
     subdirs = ["agent_data"]
 
     [resources.permissions]
-    main.url = "/admin"
+    main.url = "/"
+    main.show_tile = false
+    admin.allowed = "admins"
+    admin.url = "/admin"
 
     [resources.ports]
 
