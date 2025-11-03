@@ -84,10 +84,10 @@ setup_dex() {
 
 setup_agent() {
 	# If the API key needs updating (exclude Headscale requirement in CI context)
-	if [[ -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
+	headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
+	if [[ -z "${headplane_id:-}" || -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
 			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
-			headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
 			if [ -n $headplane_id ];
 			then
 				yunohost app shell $headscale <<< "./headscale users create $app"
