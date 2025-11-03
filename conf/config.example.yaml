@@ -131,7 +131,7 @@ integration:
   #
   # (If they are both running under systemd as sudo, this will work).
   proc:
-    enabled: false
+    enabled: true
 
 # OIDC Configuration for simpler authentication
 # (This is optional, but recommended for the best experience)
