@@ -51,7 +51,7 @@ ram.runtime = "330M"
     help.en = "You need to have at least one instance of Headscale installed beforehand on your server."
     help.fr = "Vous devez avoir au moins une instance de Headscale préalablement installée sur votre serveur."
 
-    [install.init_admin_permission]
+    [install.init_main_permission]
     type = "group"
     default = "admins"
     ask.en = "Select which group can access Headplane."
@@ -75,9 +75,6 @@ ram.runtime = "330M"
 
     [resources.permissions]
     main.url = "/"
-    main.show_tile = false
-    main.allowed = "admins"
-    admin.url = "/admin"
 
     [resources.ports]
 

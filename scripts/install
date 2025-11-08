@@ -9,10 +9,6 @@ source /usr/share/yunohost/helpers
 
 get_headscale_settings
 
-# For the time being, path is forced to "/admin"
-path="/admin"
-ynh_app_setting_set_default --key=path --value="$path"
-
 ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
 #=================================================
