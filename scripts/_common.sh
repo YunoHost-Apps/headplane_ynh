@@ -57,12 +57,12 @@ setup_dex() {
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
 		if ! ynh_in_ci_tests; then
 			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
-			api_key="$(yunohost app shell $headscale <<< './headscale apikeys create --expiration 999d')"
+			api_key="$(yunohost app shell $headscale <<< './headscale apikeys create --expiration 365d')"
 		else
 			api_key=""
 		fi
-		# 86227200 is 998 days
-		api_key_expires="$(( $(date +%s) + 86227200 ))"
+		# 31536000 is 365 days
+		api_key_expires="$(( $(date +%s) + 31536000 ))"
 		# ISO format for better internationalization
 		api_key_expires_date="$(date -d @$api_key_expires -I)"
 	fi
@@ -94,13 +94,13 @@ setup_agent() {
 				headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
 			fi
 
-			preauth_key=$(yunohost app shell $headscale <<< "./headscale preauthkeys create --expiration 999d --user $headplane_id -o json | jq -r '.key'")
+			preauth_key=$(yunohost app shell $headscale <<< "./headscale preauthkeys create --expiration 365d --user $headplane_id -o json | jq -r '.key'")
 		else
 			preauth_key="undefined"
 			ynh_write_var_in_file --file="$YNH_APP_BASEDIR/conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
 		fi
-		# 86227200 is 998 days
-		preauth_key_expires="$(( $(date +%s) + 86227200 ))"
+		# 31536000 is 365 days
+		preauth_key_expires="$(( $(date +%s) + 31536000 ))"
 		# ISO format for better internationalization
 		preauth_key_expires_date="$(date -d @$api_key_expires -I)"
 	fi
