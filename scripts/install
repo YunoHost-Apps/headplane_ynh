@@ -120,6 +120,10 @@ chown -R $headscale:$app "$install_dir"
 chown -R $headscale:$app "$data_dir"
 chmod 440 "$install_dir/config.yaml"
 
+chown    $headscale:www-data "$install_dir"
+chown    $headscale:www-data "$install_dir/build"
+chown -R $headscale:www-data "$install_dir/build/client"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
