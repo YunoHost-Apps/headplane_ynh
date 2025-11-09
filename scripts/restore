@@ -3,7 +3,7 @@
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
-abort_if_headscale_not_installed
+get_headscale_settings
 
 #=================================================
 # RESTORE THE APP MAIN DIR
@@ -12,14 +12,21 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
-chown -R $app:$app "$install_dir"
+! ynh_in_ci_tests && usermod -aG $headscale $app
+chown -R $headscale:$app "$install_dir"
+chown -R $headscale:$app "$data_dir"
 
 #=================================================
 # SETUP DEX FOR OIDC
 #=================================================
 
 setup_dex
+
+#=================================================
+# SETUP HEADPLANE AGENT
+#=================================================
+
+setup_agent
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS

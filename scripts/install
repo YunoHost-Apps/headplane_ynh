@@ -7,15 +7,21 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-abort_if_headscale_not_installed
-
-# For the time being, path is forced to "/admin"
-path="/admin"
-ynh_app_setting_set --key=path --value="/admin"
+get_headscale_settings
 
 ynh_app_setting_set_default --key=cookie_secret --value=$(ynh_string_random --length=32)
 
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
 setup_dex
+
+#=================================================
+# SETUP HEADPLANE AGENT
+#=================================================
+
+setup_agent
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -35,15 +41,37 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Advanced UI for Headscale" --log="/var/log/$app/$app.log"
 
+# Maintainers: refer to upstream's mise.toml, it contains the build steps for go and node
+
 #=================================================
-# INSTALL Headplane
+# INSTALL HEADPLANE GO MODULES
 #=================================================
-ynh_script_progression "Building $app... (this will take some time and resources!)"
+ynh_script_progression "Building $app's Go modules... (this will take some time and resources!)"
+
+pushd $install_dir
+    export GOPATH="$install_dir/build/go"
+    export GOCACHE="$install_dir/build/.cache"
+
+    # Copy Go's wasm_exec.js to the public directory
+    echo // $(go version) > app/wasm_exec.js
+    cat $(go env GOROOT)/lib/wasm/wasm_exec.js >> app/wasm_exec.js
+
+    # Build go modules
+    ynh_hide_warnings ynh_exec_as_app GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
+    ynh_hide_warnings ynh_exec_as_app go build -o build/hp_agent ./cmd/hp_agent
+    mv ./build/hp_agent $data_dir/agent
+    chmod 550 $data_dir/agent
+popd
+
+#=================================================
+# INSTALL HEADPLANE NODEJS MODULES
+#=================================================
+ynh_script_progression "Building $app's NodeJS modules... (this will take some time and resources!)"
 
 pushd $install_dir
     export HOME="/var/www/$app"
-   # ynh_hide_warnings npm install -g corepack@latest
-    #ynh_hide_warnings corepack enable && corepack prepare pnpm@10 --activate
+    ynh_hide_warnings npm install -g corepack@latest
+    ynh_hide_warnings corepack enable && corepack prepare pnpm@10.4 --activate
     ynh_exec_as_app git config --global user.name "headplane"
     ynh_exec_as_app git config --global user.email "you@example.com"
     ynh_exec_as_app git config --global init.defaultBranch master
@@ -54,19 +82,28 @@ pushd $install_dir
 
 
     # Install pnpm globally using npm
-    ynh_hide_warnings npm install -g pnpm@10 -f
+    #ynh_hide_warnings npm install -g pnpm@10.4 -f
 
     # Ensure we're using the global pnpm
-    export PATH="$(npm root -g):$PATH"
+    #export PATH="$(npm root -g):$PATH"
 
     # Patch app to display more fitting post install instructions
     ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login/page.tsx"
+    ynh_replace --match="terminal." --replace='terminal. YunoHost users, you can log in with the Single Sign-On button.' --file="$install_dir/app/routes/auth/login/page.tsx"
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
+
     # Build with the specified path ${path%/} removes a trailing slash, if there's any
     ynh_hide_warnings env __INTERNAL_PREFIX=${path%/} pnpm build
 popd
+
+#=================================================
+# CLEANUP
+#=================================================
+
+ynh_safe_rm "$install_dir/.cache"
+ynh_safe_rm "$install_dir/.local/share/pnpm"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -74,12 +111,18 @@ popd
 ynh_script_progression "Adding a configuration file..."
 
 # Disable OIDC since CI cannot use certificates
-[ ynh_in_ci_tests ] && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
+ynh_in_ci_tests && ynh_replace_regex --match="^oidc:$" --replace="#oidc:" --file="../conf/config.example.yaml"
 
 ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
-[ ! ynh_in_ci_tests ] && usermod -aG headscale $app
-chown -R $app:$app "$install_dir"
+! ynh_in_ci_tests && usermod -aG headscale $app
+chown -R $headscale:$app "$install_dir"
+chown -R $headscale:$app "$data_dir"
+chmod 440 "$install_dir/config.yaml"
+
+chown    $headscale:www-data "$install_dir"
+chown    $headscale:www-data "$install_dir/build"
+chown -R $headscale:www-data "$install_dir/build/client"
 
 #=================================================
 # START SYSTEMD SERVICE
