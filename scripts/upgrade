@@ -102,6 +102,7 @@ pushd $install_dir
 
     # Patch app to display more fitting post install instructions
     ynh_replace --match="headscale apikeys create" --replace='yunohost app shell headscale \&lt;\&lt;\&lt;  \"./headscale apikeys create\"' --file="$install_dir/app/routes/auth/login/page.tsx"
+    ynh_replace --match="terminal." --replace='terminal. YunoHost users, you can log in with the Single Sign-On button.' --file="$install_dir/app/routes/auth/login/page.tsx"
 
     # Now run pnpm commands
     ynh_hide_warnings pnpm install
