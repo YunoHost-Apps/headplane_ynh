@@ -1,3 +1,7 @@
+### Remote SSH
+
+The remote SSH feature is **not** working yet.
+
 ### Authentication keys
 
 The authentication key for `__DEX__` will expire after __API_KEY_EXPIRES_DATE__.
