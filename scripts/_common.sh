@@ -4,16 +4,24 @@
 # COMMON VARIABLES
 #=================================================
 
-nodejs_version="22"
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================
 
-abort_if_headscale_not_installed() {
-    if [ ! ynh_in_ci_tests ] && [ ! yunohost --output-as plain app list | grep -q "^headscale$" ]; then
-        ynh_die "Headscale app is not installed. Aborting."
-    fi
+get_headscale_settings() {
+	if [ -z ${headscale:-} ] || ! yunohost --output-as plain app list | grep -q "^$headscale$"; then
+		headscale=$(yunohost app list --output-as json | jq -r '[.apps[].id|select(test("^headscale(?:__[0-9]+])?"))] | first')
+		if [ -z $headscale ]; then
+			ynh_die "Headscale app is not installed. Aborting."
+		else
+			ynh_print_info "$headscale has been found on the server."
+		fi
+		ynh_app_setting_set --key=headscale --value="$headscale"
+	fi
+		headscale_install_dir="$(ynh_app_setting_get --app=$headscale --key=install_dir)"
+		headscale_url="https://$(ynh_app_setting_get --app=$headscale --key=domain)/"
+		ynh_app_setting_set --key=headscale_install_dir --value="$headscale_install_dir"
+		ynh_app_setting_set --key=headscale_url --value="$headscale_url"
 }
 
 setup_dex() {
@@ -24,7 +32,7 @@ setup_dex() {
 	# If there are no Dex app installed
 	if [ $(jq -r '[ .[] | select(.manifest.id == "dex").id ] | length' <<< $dex_apps) -eq 0 ]
 	then
-	    ynh_die "The apps needs at least one Dex instance to be installed. Install or restore one first."
+		ynh_die "The apps needs at least one Dex instance to be installed. Install or restore one first."
 	# Else if the configured Dex app is not in the list, default to the first one and display a warning
 	elif [ $(jq --arg dex $dex -r '[ .[] | select(.id == $dex) ] | length' <<< $dex_apps) -ne 1 ]
 	then
@@ -35,7 +43,7 @@ setup_dex() {
 
 	# Make sure that the Dex version is compatible
 	dex_version=$(yunohost app info $dex --output-as json | jq -r '.version')
-	if [ $(dpkg --compare-versions "${dex_version#v}" lt "2.42.1~ynh4") ]; then
+	if dpkg --compare-versions "${dex_version#v}" lt "2.42.1~ynh4"; then
 		ynh_die "You need to upgrade $dex to v2.42.1~ynh4 and above first."
 	fi
 
@@ -47,14 +55,14 @@ setup_dex() {
 
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
-		if [ ! ynh_in_ci_tests ]; then
-			systemctl is-active --quiet headscale || systemctl restart headscale --quiet
-			api_key="$(yunohost app shell headscale <<< './headscale apikeys create --expiration 999d')"
+		if ! ynh_in_ci_tests; then
+			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
+			api_key="$(yunohost app shell $headscale <<< './headscale apikeys create --expiration 365d')"
 		else
 			api_key=""
 		fi
-		# 86227200 is 998 days
-		api_key_expires="$(( $(date +%s) + 86227200 ))"
+		# 31536000 is 365 days
+		api_key_expires="$(( $(date +%s) + 31536000 ))"
 		# ISO format for better internationalization
 		api_key_expires_date="$(date -d @$api_key_expires -I)"
 	fi
@@ -72,4 +80,32 @@ setup_dex() {
 
 	# Add the configuration file for the app in Dex
 	bash "$dex_install_dir/add_config.sh" $app $oidc_name $oidc_callback $oidc_secret
+}
+
+setup_agent() {
+	# If the API key needs updating (exclude Headscale requirement in CI context)
+	headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
+	if [[ -z "${headplane_id:-}" || -z "${preauth_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
+		if ! ynh_in_ci_tests; then
+			systemctl is-active --quiet $headscale || systemctl restart $headscale --quiet
+			if [ -n $headplane_id ];
+			then
+				yunohost app shell $headscale <<< "./headscale users create $app"
+				headplane_id=$(yunohost app shell $headscale <<< "./headscale users list -n $app -o json | jq -r 'select(.) | .[].id'")
+			fi
+
+			preauth_key=$(yunohost app shell $headscale <<< "./headscale preauthkeys create --reusable --expiration 365d --user $headplane_id -o json | jq -r '.key'")
+		else
+			preauth_key="undefined"
+			ynh_write_var_in_file --file="$YNH_APP_BASEDIR/conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
+		fi
+		# 31536000 is 365 days
+		preauth_key_expires="$(( $(date +%s) + 31536000 ))"
+		# ISO format for better internationalization
+		preauth_key_expires_date="$(date -d @$api_key_expires -I)"
+	fi
+
+	ynh_app_setting_set         --key=preauth_key               --value="$preauth_key"
+	ynh_app_setting_set         --key=preauth_key_expires       --value="$preauth_key_expires"
+	ynh_app_setting_set         --key=preauth_key_expires_date  --value="$preauth_key_expires_date"
 }

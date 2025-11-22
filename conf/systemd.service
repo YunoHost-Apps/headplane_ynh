@@ -1,13 +1,12 @@
 [Unit]
 Description=Headplane: Headscale Management Web UI
-After=network.target nginx.service headscale.service __DEX__.service
+After=network.target nginx.service __DEX__.service __HEADSCALE__.service
+Requires=network.target nginx.service __DEX__.service __HEADSCALE__.service
 
 [Service]
-User=__APP__
-#Environment=NODE_ENV=production
-#Environment=LOAD_ENV_FILE=true
+User=__HEADSCALE__
+Group=__HEADSCALE__
 Environment=HEADPLANE_CONFIG_PATH=__INSTALL_DIR__/config.yaml
-#EnvironmentFile=__INSTALL_DIR__/.env
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__NODEJS_DIR__/node __INSTALL_DIR__/build/server/index.js
 Restart=always
@@ -32,7 +31,8 @@ ProtectKernelModules=yes
 ProtectKernelTunables=yes
 LockPersonality=yes
 SystemCallArchitectures=native
-SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @setuid @swap @cpu-emulation @privileged
+#We cannot have @setuid @privileged in the next line due to the spawning agent
+SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @swap @cpu-emulation
 
 # Denying access to capabilities that should not be relevant for webapps
 # Doc: https://man7.org/linux/man-pages/man7/capabilities.7.html

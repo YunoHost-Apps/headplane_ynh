@@ -7,7 +7,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.6.0~ynh1"
+version = "0.6.1~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -17,7 +17,7 @@ admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integratio
 code = "https://github.com/tale/headplane"
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
@@ -25,9 +25,9 @@ multi_instance = false
 ldap = false
 sso = false
 
-disk = "50M"
-ram.build = "90M"
-ram.runtime = "50M"
+disk = "1.2G"
+ram.build = "2G"
+ram.runtime = "330M"
 
 [install]
     [install.domain]
@@ -43,30 +43,41 @@ ram.runtime = "50M"
     help.en = "You need to have at least one instance of Dex installed beforehand on your server."
     help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
 
-    [install.headscale_url]
-    ask.en = "Enter Headscale install URL"
-    ask.fr = "Entrez l'URL de Headscale"
-    type = "string"
-    example = "https://headscale.domain.tld"
-    pattern.regexp = "^https?://.*$"
-    pattern.error = "URL needs to starts with 'https://' (or 'http://' for debugging purposes)"
+    [install.headscale]
+    type = "app"
+    filter = "match(id, '^(headscale)(__[0-9+])?$')"
+    ask.en = "Select the Headscale app that will be managed by Headplane."
+    ask.fr = "Sélectionnez l'app Headscale qui sera gérée par Headplane."
+    help.en = "You need to have at least one instance of Headscale installed beforehand on your server."
+    help.fr = "Vous devez avoir au moins une instance de Headscale préalablement installée sur votre serveur."
 
     [install.init_main_permission]
     type = "group"
-    default = "visitors"
+    default = "admins"
+    help.en = "You can log in Headplane with your YunoHost credentials. You may leave access to visitors if you want to allow external accounts to log in with an authentication key from Headscale."
+    help.fr = "Vous pouvez vous connecter à Headplane avec vos identifiants YunoHost. Vous pouvez laisser l'accès aux visiteurs si vous souhaitez autoriser l'accès à des comptes extérieurs se connectant avec une clé d'authentification de Headscale."
 
 [resources]
 
     [resources.sources.main]
-    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.0.tar.gz"
-    sha256 = "5a9a4bea43f6f8b40e77032d942d80fa51b23292b537558f1f35ed1d95939c5f"
+    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.1.tar.gz"
+    sha256 = "14efd96f9b3a02500ca936dcaf48daf6cafd710b0c916577e67fec61773d20c2"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
 
     [resources.install_dir]
 
+    [resources.data_dir]
+    subdirs = ["agent_data"]
+
     [resources.permissions]
     main.url = "/"
 
     [resources.ports]
+
+    [resources.nodejs]
+    version = "22"
+
+    [resources.go]
+    version = "1.25.1"
