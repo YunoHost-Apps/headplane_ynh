@@ -7,7 +7,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.6.1~ynh1"
+version = "0.6.2~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -60,8 +60,8 @@ ram.runtime = "330M"
 [resources]
 
     [resources.sources.main]
-    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.1.tar.gz"
-    sha256 = "14efd96f9b3a02500ca936dcaf48daf6cafd710b0c916577e67fec61773d20c2"
+    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.2.tar.gz"
+    sha256 = "f84dbbc592c024336393041bc76ceb7762b1eed689ec65d571220fd8024d922b"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
