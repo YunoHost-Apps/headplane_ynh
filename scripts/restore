@@ -45,7 +45,7 @@ yunohost service add $app --description="Advanced UI for Headscale" --log="/var/
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Running on 127.0.0.1" --timeout=30
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Listening on http://127.0.0.1" --timeout=30
 
 ynh_systemctl --service=nginx --action=reload
 
