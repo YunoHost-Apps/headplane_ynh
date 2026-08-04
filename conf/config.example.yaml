@@ -202,13 +202,13 @@ integration:
 
 # OIDC Configuration for simpler authentication
 # (This is optional, but recommended for the best experience)
-  oidc:
+oidc:
 #   # Set to false to define OIDC config without enabling it.
 #   # Useful for Helm charts or generating docs from config files.
-    enabled: true
+  enabled: true
 #
 #   # The OIDC issuer URL
-    issuer: "https://__DEX_DOMAIN____DEX_PATH__"
+  issuer: "https://__DEX_DOMAIN____DEX_PATH__"
 #
 #   # DEPRECATED: Use headscale.api_key instead.
 #   # If set, this will be used as a fallback for headscale.api_key.
@@ -240,7 +240,7 @@ integration:
 #   # Most providers (Keycloak, Auth0, etc.) require this URL to be pre-registered
 #   # in the OIDC client configuration. If unset, Headplane defaults to its own
 #   # `<server.base_url>/admin/login?s=logout` page.
-    post_logout_redirect_uri: "__OIDC_CALLBACK__"
+  post_logout_redirect_uri: "__OIDC_CALLBACK__"
 
 #
 #   # The authentication method to use when communicating with the token endpoint.
@@ -251,12 +251,12 @@ integration:
 #   # The client ID for the OIDC client
 #   # For the best experience please ensure this is *identical* to the client_id
 #   # you are using for Headscale.
-    client_id: "__OIDC_NAME__"
+  client_id: "__OIDC_NAME__"
 #
 #   # The client secret for the OIDC client
 #   # You may also provide `client_secret_path` instead to read a value from disk.
 #   # See https://headplane.net/configuration/#sensitive-values
-    client_secret: "__OIDC_SECRET__"
+  client_secret: "__OIDC_SECRET__"
 #
 #   # Whether to use PKCE when authenticating users. This is recommended as it
 #   # adds an extra layer of security to the authentication process. Enabling
@@ -265,7 +265,7 @@ integration:
 #   use_pkce: true
 #
 #   # If you want to disable traditional login via Headscale API keys
-    disable_api_key_login: false
+  disable_api_key_login: false
 #
 #   # By default profile pictures are pulled from the OIDC provider when
 #   # we go to fetch the userinfo endpoint. Optionally, this can be set to
