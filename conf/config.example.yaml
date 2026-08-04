@@ -154,6 +154,7 @@ integration:
     #
     # If using Docker, it is best to leave this as the default.
     work_dir: "__DATA_DIR__/agent_data"
+    executable_path: "__DATA_DIR__/agent"
 
   # Only one of these should be enabled at a time or you will get errors
   # This does not include the agent integration (above), which can be enabled
