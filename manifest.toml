@@ -7,7 +7,7 @@ name = "Headplane"
 description.en = "Advanced UI for Headscale"
 description.fr = "Interface utilisateur avancée pour Headscale"
 
-version = "0.6.3~ynh1"
+version = "0.7.0~ynh1"
 
 maintainers = ["mdtita"]
 
@@ -17,7 +17,7 @@ admindoc = "https://github.com/tale/headplane/blob/main/docs/Advanced-Integratio
 code = "https://github.com/tale/headplane"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.40"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
@@ -60,8 +60,8 @@ ram.runtime = "330M"
 [resources]
 
     [resources.sources.main]
-    url = "https://github.com/tale/headplane/archive/refs/tags/v0.6.3.tar.gz"
-    sha256 = "ff5550146e41ff8d3fd72d1156a8345c8769bd1ea27570ee1b130015e228c057"
+    url = "https://github.com/tale/headplane/archive/refs/tags/v0.7.0.tar.gz"
+    sha256 = "dc73f9ffa59c4112c0b68c16142d107232065402a3e33e363fb5094c65a783d5"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
@@ -77,7 +77,7 @@ ram.runtime = "330M"
     [resources.ports]
 
     [resources.nodejs]
-    version = "22"
+    version = "24"
 
     [resources.go]
     version = "1.25.1"

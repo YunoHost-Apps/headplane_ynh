@@ -133,7 +133,7 @@ ynh_safe_rm "$install_dir/.local/share/pnpm"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Running on 127.0.0.1" --timeout=30
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" --wait_until="Listening on http://127.0.0.1" --timeout=30
 
 #=================================================
 # END OF SCRIPT

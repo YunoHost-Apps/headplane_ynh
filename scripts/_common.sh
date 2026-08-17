@@ -51,7 +51,7 @@ setup_dex() {
 	dex_install_dir="$(ynh_app_setting_get --app $dex --key install_dir)"
 	dex_domain="$(ynh_app_setting_get --app $dex --key domain)"
 	dex_path="$(ynh_app_setting_get --app $dex --key path)"
-	oidc_callback="https://$domain${path%/}/oidc/callback"
+	oidc_callback="https://$domain${path%/}/admin/oidc/callback"
 
 	# If the API key needs updating (exclude Headscale requirement in CI context)
 	if [[ -z "${api_key:-}" || "$(date +%s)" -gt "${api_key_expires:-0}" ]]; then
@@ -97,7 +97,7 @@ setup_agent() {
 			preauth_key=$(yunohost app shell $headscale <<< "./headscale preauthkeys create --reusable --expiration 365d --user $headplane_id -o json | jq -r '.key'")
 		else
 			preauth_key="undefined"
-			ynh_write_var_in_file --file="$YNH_APP_BASEDIR/conf/config.example.yaml" --key="enabled" --value="false" --after="connects."
+			ynh_write_var_in_file --file="$YNH_APP_BASEDIR/conf/config.example.yaml" --key="enabled" --value="false" --after="agent:"
 		fi
 		# 31536000 is 365 days
 		preauth_key_expires="$(( $(date +%s) + 31536000 ))"
