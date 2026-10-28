@@ -51,14 +51,15 @@ ynh_script_progression "Building $app's Go modules... (this will take some time 
 pushd $install_dir
     export GOPATH="$install_dir/build/go"
     export GOCACHE="$install_dir/build/.cache"
+    ynh_exec_as_app mkdir -p $install_dir/build/{go,.cache}
 
     # Copy Go's wasm_exec.js to the public directory
     echo // $(go version) > app/wasm_exec.js
     cat $(go env GOROOT)/lib/wasm/wasm_exec.js >> app/wasm_exec.js
 
     # Build go modules
-    ynh_hide_warnings ynh_exec_as_app GOOS="js" GOARCH="wasm" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
-    ynh_hide_warnings ynh_exec_as_app go build -o build/hp_agent ./cmd/hp_agent
+    ynh_hide_warnings ynh_exec_as_app GOOS="js" GOARCH="wasm" GOPATH="$install_dir/build/go" GOCACHE="$install_dir/build/.cache" go build -o app/hp_ssh.wasm ./cmd/hp_ssh
+    ynh_hide_warnings ynh_exec_as_app GOPATH="$install_dir/build/go" GOCACHE="$install_dir/build/.cache" go build -o ./build/hp_agent ./cmd/hp_agent
     mv ./build/hp_agent $data_dir/agent
     chmod 550 $data_dir/agent
 popd
