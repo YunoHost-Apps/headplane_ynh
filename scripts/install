@@ -51,7 +51,9 @@ ynh_script_progression "Building $app's Go modules... (this will take some time 
 pushd $install_dir
     export GOPATH="$install_dir/build/go"
     export GOCACHE="$install_dir/build/.cache"
-    ynh_exec_as_app mkdir -p $install_dir/build/{go,.cache}
+    mkdir -p $install_dir/build/{go,.cache}
+    chown -R $app $install_dir/build
+    chmod -R 755 $install_dir/build
 
     # Copy Go's wasm_exec.js to the public directory
     echo // $(go version) > app/wasm_exec.js
