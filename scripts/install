@@ -53,7 +53,7 @@ pushd $install_dir
     export GOCACHE="$install_dir/build/.cache"
     mkdir -p $install_dir/build/go
     mkdir -p $install_dir/build/.cache
-    chown -R $app $install_dir/build
+    chown -R $app:$app $install_dir/build
     chmod -R 755 $install_dir/build
 
     # Copy Go's wasm_exec.js to the public directory
